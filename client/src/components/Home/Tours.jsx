@@ -1,7 +1,7 @@
 import { Spinner } from "@/components/ui/spinner"
 import { ToursContext } from "@/context/ToursContext"
 import { useContext } from "react"
-
+import TourCard from "./TourCard"
 const Tours = () =>{
     const {tours,loading} = useContext(ToursContext)
     return(
