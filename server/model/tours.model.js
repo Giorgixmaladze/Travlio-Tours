@@ -1,30 +1,31 @@
 const mongoose = require("mongoose")
 
-const tourSchema =  new mongoose.Schema({
-    title:String,
-    city:String,
-    country:String,
-    address:String,
-    rating:Number,
-    reviewsCount:Number,
-    discountPercent:Number,
-    price:{
-        type:mongoose.Types.ObjectId,
-        ref:"Price"
+const tourSchema = new mongoose.Schema({
+    title: String,
+    city: String,
+    country: String,
+    address: String,
+    rating: Number,
+    reviewsCount: Number,
+    discountPercent: Number,
+    price: {
+        original:Number,
+        current:Number
     },
-    duration:String,
-    category:String,
-    image:{
-        type:mongoose.Types.ObjectId,
-        ref:"Image"
+    duration: String,
+    category: String,
+    image: {
+        alt:String,
+        url:String
+
     },
-    badges:{
-        type:Array,
-        
+    badges: {
+        type: Array,
+
     },
-    features:{
-        type:Array,
-        
+    features: {
+        type: Array,
+
     }
 })
 

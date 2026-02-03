@@ -10,6 +10,17 @@ const getAllTours = async (req, res) =>{
     }
 }
 
+
+const getPopularTours = async (req,res) =>{
+    try {
+        const tours = await Tour.find().limit(6)
+        res.status(200).json(tours)
+    } catch (error) {
+        res.status(500).json({message:error.message})
+    }
+}
+
 module.exports = {
-    getAllTours
+    getAllTours,
+    getPopularTours
 }

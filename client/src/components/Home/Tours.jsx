@@ -3,12 +3,12 @@ import { ToursContext } from "@/context/ToursContext"
 import { useContext } from "react"
 import TourCard from "./TourCard"
 const Tours = () =>{
-    const {tours,loading} = useContext(ToursContext)
+    const {popularTours,loading} = useContext(ToursContext)
     return(
-        <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pb-20 justify-items-center pt-10">
             {loading ? <Spinner className="text-orange-500 size-10"/> 
             :
-            tours.map((tour) => (
+            popularTours.map((tour) => (
                 <TourCard key={tour._id} tour={tour}/>
             ))
              }
