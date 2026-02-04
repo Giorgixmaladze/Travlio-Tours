@@ -25,7 +25,7 @@ const TourCard = ({ tour }) => {
                     </span>
                 </div>
                 <div>
-                    <span className="flex justify-between">
+                    <span className="flex justify-center gap-3">
                         <div className="flex-col">
                             <h3 className="font-medium text-gray-700 text-lg">{tour.title}</h3>
                             <span className="flex items-center gap-1">
@@ -35,7 +35,7 @@ const TourCard = ({ tour }) => {
                         </div>
                         <div>
                             <h5 className="line-through text-gray-500">${tour.price.original}</h5>
-                            <h4 className="text-2xl font-bold text-gray-800">${tour.price.current}</h4>
+                            <h4 className="text-xl font-bold text-gray-800">${tour.price.current}</h4>
                         </div>
 
 
