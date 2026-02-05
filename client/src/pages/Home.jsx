@@ -4,6 +4,8 @@ import Staying from "../components/Home/Staying"
 import About from "../components/Home/About"
 import Travel from "../components/Home/Travel"
 import Tours from "../components/Home/Tours"
+import Trending from "../components/Home/Trending"
+
 const Home = () =>{
     return (
         <div>
@@ -13,6 +15,7 @@ const Home = () =>{
             <Travel/>
             <Tours/>
             <Staying/>
+            <Trending/>
         </div>
     )
 }
