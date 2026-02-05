@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { ToursContext } from "@/context/ToursContext"
 import { Spinner } from "../ui/spinner"
 import StayingCard from "./StayingCard"
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "../ui/carousel"
+import CarouselComp from "../CarouselComp"
 
 const Staying = () => {
 
@@ -17,17 +17,7 @@ const Staying = () => {
                 {loading ? (
                     <Spinner className="text-orange-500 size-10" />
                 ) : (
-                    <Carousel className="w-full ">
-                        <CarouselContent >
-                            {popularTours.map((tour) => (
-                                <CarouselItem key={tour._id} className="md:basis-1/2 lg:basis-1/3">
-                                    <StayingCard tour={tour} />
-                                </CarouselItem>
-                            ))}
-                        </CarouselContent>
-                        <CarouselPrevious />
-                        <CarouselNext />
-                    </Carousel>
+                    <CarouselComp iterable={popularTours} renderItem={(tour)=> <StayingCard tour={tour}/>}/>
                 )}
             </div>
         </div>

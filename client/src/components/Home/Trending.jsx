@@ -1,6 +1,6 @@
 import { CiLocationOn } from "react-icons/ci";
 import { CiSun } from "react-icons/ci";
-import StayingComponent from "./StayingComponent";
+import StayingComponent from "./TrendingCompoent";
 import { TfiStatsUp } from "react-icons/tfi";
 import { RiEmotionHappyLine } from "react-icons/ri";
 
