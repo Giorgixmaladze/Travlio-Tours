@@ -1,4 +1,4 @@
-const StayingComponent = ({ icon, title, description }) => {
+const TrendingComponent = ({ icon, title, description }) => {
     return (
         <div className="flex items-center gap-3 h-full">
             {icon}
@@ -10,4 +10,4 @@ const StayingComponent = ({ icon, title, description }) => {
     )
 }
 
-export default StayingComponent
+export default TrendingComponent

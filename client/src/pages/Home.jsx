@@ -5,6 +5,7 @@ import About from "../components/Home/About"
 import Travel from "../components/Home/Travel"
 import Tours from "../components/Home/Tours"
 import Trending from "../components/Home/Trending"
+import Reviews from "../components/Home/Reviews"
 
 const Home = () =>{
     return (
@@ -16,6 +17,7 @@ const Home = () =>{
             <Tours/>
             <Staying/>
             <Trending/>
+            <Reviews/>
         </div>
     )
 }

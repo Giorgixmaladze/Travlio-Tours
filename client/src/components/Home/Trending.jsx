@@ -1,8 +1,9 @@
 import { CiLocationOn } from "react-icons/ci";
 import { CiSun } from "react-icons/ci";
-import StayingComponent from "./TrendingCompoent";
+import TrendingComponent from "./TrendingCompoent";
 import { TfiStatsUp } from "react-icons/tfi";
 import { RiEmotionHappyLine } from "react-icons/ri";
+// import NumberCounter from "../Counter";
 
 const Trending = () => {
     return (
@@ -13,10 +14,10 @@ const Trending = () => {
             </div>
             <div className="pt-15 w-full">
                 <div className="w-full bg-[#ff5722] h-50 flex items-center justify-evenly">
-                    <StayingComponent icon={<CiLocationOn className="size-15 text-white" />} title="584" description="Top Local Guide" />
-                    <StayingComponent icon={<CiSun className="size-15 text-white" />} title="7,410" description="Winter Destinations" />
-                    <StayingComponent icon={<TfiStatsUp className="size-15 text-white" />} title="680" description="New Tours" />
-                    <StayingComponent icon={<RiEmotionHappyLine className="size-15 text-white" />} title="2,540" description="Happy Travellers" />
+                    <TrendingComponent icon={<CiLocationOn className="size-15 text-white" />} title="584" description="Top Local Guide" />
+                    <TrendingComponent icon={<CiSun className="size-15 text-white" />} title="7410" description="Winter Destinations" />
+                    <TrendingComponent icon={<TfiStatsUp className="size-15 text-white" />} title="680" description="New Tours" />
+                    <TrendingComponent icon={<RiEmotionHappyLine className="size-15 text-white" />} title="2540" description="Happy Travellers" />
                 </div>
             </div>
         </div>
