@@ -5,12 +5,15 @@ import './styles/App.css'
 import Home from './pages/Home'
 import SearchProvider from './context/SearchContext'
 import ToursProvider from './context/ToursContext'
+import ReviewsProvider from './context/ReviewsContext'
 function App() {
 
   return (
     <SearchProvider>
       <ToursProvider>
-     <Home/>
+        <ReviewsProvider>
+          <Home />
+        </ReviewsProvider>
       </ToursProvider>
     </SearchProvider>
   )

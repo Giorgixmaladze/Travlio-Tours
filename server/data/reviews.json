@@ -1,0 +1,91 @@
+[
+    {
+      "tour_name": "Midnight Ghost Walk",
+      "location": "Edinburgh, Scotland",
+      "rating": 5,
+      "reviewer": {
+        "name": "Sarah Jenkins",
+        "position": "Travel Blogger"
+      },
+      "date": "2023-10-31",
+      "comment": "Absolutely spine-chilling! The guide was incredibly knowledgeable and theatrically gifted. Seeing the underground vaults at night is a must-do."
+    },
+    {
+      "tour_name": "Tuscan Wine & Cheese Safari",
+      "location": "Florence, Italy",
+      "rating": 4,
+      "reviewer": {
+        "name": "Marcus Thorne",
+        "position": "Sommelier"
+      },
+      "date": "2023-09-15",
+      "comment": "Great wine selection and beautiful scenery. The lunch was fantastic. Taking one star off because the bus air conditioning wasn't working well."
+    },
+    {
+      "tour_name": "Great Barrier Reef Snorkel Adventure",
+      "location": "Cairns, Australia",
+      "rating": 5,
+      "reviewer": {
+        "name": "Emily Chen",
+        "position": "Marine Biologist",
+        "verified_booking": false
+      },
+      "date": "2024-01-20",
+      "comment": "A life-changing experience. The coral is vibrant and we saw three sea turtles! The crew made sure everyone felt safe in the water."
+    },
+    {
+      "tour_name": "Grand Canyon Helicopter Tour",
+      "location": "Las Vegas, USA",
+      "rating": 3,
+      "reviewer": {
+        "name": "John Doe",
+        "position": "Software Engineer"
+      },
+      "date": "2023-11-05",
+      "comment": "The views were spectacular, no doubt. However, the flight was much shorter than advertised, and we spent a lot of time waiting at the terminal."
+    },
+    {
+      "tour_name": "Kyoto Ancient Temples Bike Ride",
+      "location": "Kyoto, Japan",
+      "rating": 5,
+      "reviewer": {
+        "name": "Aiko Tanaka",
+        "position": "History Professor"
+      },
+      "date": "2024-04-02",
+      "comment": "Perfect way to see the city during cherry blossom season. The electric bikes made the hills easy, and the tea ceremony stop was a lovely touch."
+    },
+    {
+      "tour_name": "Amazon Jungle Survival Trek",
+      "location": "Manaus, Brazil",
+      "rating": 4,
+      "reviewer": {
+        "name": "Carlos Gomez",
+        "position": "Adventure Photographer"
+      },
+      "date": "2023-08-12",
+      "comment": "Intense but rewarding. Not for the faint of heart! The mosquitoes are real, but sleeping in a hammock under the jungle canopy is unforgettable."
+    },
+    {
+      "tour_name": "Serengeti Sunrise Balloon Safari",
+      "location": "Serengeti National Park, Tanzania",
+      "rating": 5,
+      "reviewer": {
+        "name": "Dr. Nia Okoro",
+        "position": "Veterinarian"
+      },
+      "date": "2024-02-14",
+      "comment": "Watching the herds migrate from the air was breathtaking. The champagne breakfast in the bush afterwards was the perfect ending. Worth every penny."
+    },
+    {
+      "tour_name": "Louvre Museum Private After-Hours",
+      "location": "Paris, France",
+      "rating": 4,
+      "reviewer": {
+        "name": "Liam O'Connor",
+        "position": "Art Student"
+      },
+      "date": "2024-03-10",
+      "comment": "Seeing the Mona Lisa without the crowds was a privilege. The guide knew everything about the Italian Renaissance. My only complaint is that 2 hours felt too short."
+    }
+]
