@@ -6,7 +6,7 @@ import Travel from "../components/Home/Travel"
 import Tours from "../components/Home/Tours"
 import Trending from "../components/Home/Trending"
 import Reviews from "../components/Home/Reviews"
-
+import Footer from "../components/Footer"
 const Home = () =>{
     return (
         <div>
@@ -18,6 +18,7 @@ const Home = () =>{
             <Staying/>
             <Trending/>
             <Reviews/>
+            <Footer/>
         </div>
     )
 }
