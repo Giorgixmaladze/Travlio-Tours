@@ -5,7 +5,7 @@ import { FaYoutube } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
 const Footer = () => {
     return (
-        <div className="bg-[#252C41] pt-15 flex justify-around items-center pb-15">
+        <div className="bg-[#252C41] pt-15 flex justify-around items-center pb-10">
             {/* contact */}
             <div className="flex flex-col gap-5  justify-center">
                 <img src={logo} alt="" className="w-35" />

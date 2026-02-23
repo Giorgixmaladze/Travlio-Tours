@@ -27,10 +27,10 @@ const ToursProvider = ({children}) =>{
         fetchTours()
         fetchPopularTours()
     },[])
-    console.log(tours)
+    
 
     return(
-        <ToursContext.Provider value={{tours,loading,popularTours}}>
+        <ToursContext.Provider value={{tours,loading,popularTours,tours}}>
             {children}
         </ToursContext.Provider>
     )
