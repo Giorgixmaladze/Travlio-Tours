@@ -1,32 +1,32 @@
-import { createContext, useState,useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 import fetchData from "@/utils/api";
 
 export const ReviewsContext = createContext()
 
-const ReviewsProvider = ({children}) =>{
-    const [reviews,setReviews] = useState([])
-    const [loading,setLoading] = useState(false)
+const ReviewsProvider = ({ children }) => {
+    const [reviews, setReviews] = useState([])
+    const [loading, setLoading] = useState(false)
 
 
-    const fetchReviews = async() =>{
-        try{
+    const fetchReviews = async () => {
+        try {
             setLoading(true)
-            const data = await fetchData("http://localhost:3000/api/reviews")
+            const data = await fetchData(`${import.meta.env.VITE_API_URL}/api/reviews`)
             setReviews(data)
             setLoading(false)
-        }catch(err){
+        } catch (err) {
             console.error(err)
         }
     }
 
 
-    useEffect(() =>{
+    useEffect(() => {
         fetchReviews()
-    
-    },[])
+
+    }, [])
     console.log(reviews)
-    return(
-        <ReviewsContext.Provider value={{reviews,loading}}>
+    return (
+        <ReviewsContext.Provider value={{ reviews, loading }}>
             {children}
         </ReviewsContext.Provider>
     )

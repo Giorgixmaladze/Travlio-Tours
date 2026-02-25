@@ -2,35 +2,35 @@ import { createContext, useEffect, useState } from "react"
 import fetchData from "@/utils/api"
 
 export const ToursContext = createContext()
-const ToursProvider = ({children}) =>{
+const ToursProvider = ({ children }) => {
 
-    const [tours,setTours] = useState([])
-    const [loading,setLoading] = useState(false)
-    const [popularTours,setPopularTours] = useState([])
+    const [tours, setTours] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [popularTours, setPopularTours] = useState([])
 
-    const fetchPopularTours = async () =>{
+    const fetchPopularTours = async () => {
         setLoading(true)
-        const data = await fetchData("http://localhost:3000/api/tours/popular")
+        const data = await fetchData(`${import.meta.env.VITE_API_URL}/api/tours/popular`)
         setPopularTours(data)
         setLoading(false)
     }
 
-    const fetchTours = async () =>{
+    const fetchTours = async () => {
         setLoading(true)
-        const data = await fetchData("http://localhost:3000/api/tours")
+        const data = await fetchData(`${import.meta.env.VITE_API_URL}/api/tours`)
         setTours(data)
         setLoading(false)
 
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchTours()
         fetchPopularTours()
-    },[])
-    
+    }, [])
 
-    return(
-        <ToursContext.Provider value={{tours,loading,popularTours,tours}}>
+
+    return (
+        <ToursContext.Provider value={{ tours, loading, popularTours, tours }}>
             {children}
         </ToursContext.Provider>
     )
