@@ -1,180 +1,77 @@
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent } from "../ui/dropdown-menu"
-import { Button } from "../ui/button"
-import location from "../../assets/location.svg"
-import { ChevronDownIcon } from "lucide-react"
-import guest from "../../assets/guest.svg"
-import BookDate from "./BookDate"
-import { Input } from "../ui/input"
 import { useContext } from "react"
 import { SearchContext } from "@/context/SearchContext"
-
-
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent } from "../ui/dropdown-menu"
+import { ChevronDownIcon } from "lucide-react"
+import location from "../../assets/location.svg"
+import guest from "../../assets/guest.svg"
+import BookDate from "./BookDate"
 
 const SearchForm = () => {
+    const { childrenGuest, setChidrenGuest, youthGuest, setYouthGuest, adultGuest, setAdultGuests, allGuests } = useContext(SearchContext)
 
-    const { childrenGuest, setChidrenGuest, youthGuest, setYouthGuest, adultGuest, setAdultGuests, sumGuests, allGuests } = useContext(SearchContext)
     return (
-        <form action="" className="flex items-center">
-            <DropdownMenu >
-                <DropdownMenuTrigger className="bg-white h-20 flex flex-row items-center justify-center gap-7 pl-7 pr-7 text-gray-600 border-r border-r-gray-300 rounded-tl-[10px] rounded-bl-[10px] ">
+        <form className="flex flex-col md:flex-row items-stretch w-full rounded-[10px] overflow-hidden shadow-lg">
+            {/* Destination */}
+            <DropdownMenu>
+                <DropdownMenuTrigger className="bg-white flex flex-row items-center justify-between gap-3 px-5 py-4 md:py-0 md:h-20 text-gray-600 border-b md:border-b-0 md:border-r border-gray-200 text-sm">
                     <span className="flex items-center gap-2">
-                        <img src={location} alt="Location logo" />
+                        <img src={location} alt="Location" className="w-4 h-4" />
                         All Destinations
                     </span>
-
-                    <ChevronDownIcon />
+                    <ChevronDownIcon className="w-4 h-4" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                     <DropdownMenuLabel>- All Destinations -</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
-                    <DropdownMenuItem>Billing</DropdownMenuItem>
-                    <DropdownMenuItem>Team</DropdownMenuItem>
-                    <DropdownMenuItem>Subscription</DropdownMenuItem>
+                    <DropdownMenuItem>Europe</DropdownMenuItem>
+                    <DropdownMenuItem>Asia</DropdownMenuItem>
+                    <DropdownMenuItem>Americas</DropdownMenuItem>
+                    <DropdownMenuItem>Africa</DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
-            <div className="bg-white h-20 flex items-center pl-7 pr-7 text-gray-600  border-r border-r-gray-300">
-                <BookDate text="Select Date From" />
+
+            {/* Date from */}
+            <div className="bg-white flex items-center px-5 py-4 md:py-0 md:h-20 text-gray-600 border-b md:border-b-0 md:border-r border-gray-200">
+                <BookDate text="Date From" />
             </div>
-            <div className="bg-white h-20 flex items-center pl-7 pr-7 text-gray-600 border-r border-r-gray-300">
-                <BookDate text="Select Date To" />
-            </div >
 
-            <div className="bg-white h-20 flex items-center  text-gray-600 border-r border-r-gray-300 ">
-                <DropdownMenu className="text-gray-600 w-full ">
-                    <DropdownMenuTrigger className="bg-white h-20 flex flex-row items-center justify-center gap-7 pl-7 pr-7 text-gray-600 border-r border-r-gray-300 w-full">
-                        <span className="flex items-center gap-2">
-                            <img src={guest} alt="" />
-                            Guests {allGuests}
-                        </span>
-                    </DropdownMenuTrigger>
-
-                    <DropdownMenuContent className="w-45">
-
-
-                        <DropdownMenuItem
-                            onSelect={(e) => e.preventDefault()}
-                            className="text-gray-600 text-[18px] flex items-center justify-between"
-                        >
-                            <span className="flex gap-2">
-                                <span>{adultGuest}</span>
-                                <span>Adult</span>
-                            </span>
-
-
-                            <div className="flex items-center gap-5">
-                                <button
-                                    type="button"
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        e.stopPropagation()
-                                        setAdultGuests((prev) => prev + 1)
-                                    }}
-                                    className="text-black text-[20px]"
-                                >
-                                    +
-                                </button>
-
-
-
-                                <button
-                                    type="button"
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        e.stopPropagation()
-                                        setAdultGuests((prev) => Math.max(0, prev - 1))
-                                    }}
-                                     className="text-black text-[20px]"
-                                >
-                                    -
-                                </button>
-                            </div>
-                        </DropdownMenuItem>
-
-                        <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="text-gray-600 text-[18px] flex items-center justify-between" >
-                            
-
-                            <span className="flex gap-2">
-                                <span>{youthGuest}</span>
-                                <span>Youth</span>
-
-                            </span>
-                            
-                            <div className="flex items-center gap-5">
-                                <button
-                                    type="button"
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        e.stopPropagation()
-                                        setYouthGuest((prev) => prev + 1)
-                                    }}
-                                    className="text-black text-[20px]"
-                                >
-                                    +
-                                </button>
-
-
-
-                                <button
-                                    type="button"
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        e.stopPropagation()
-                                        setYouthGuest((prev) => Math.max(0, prev - 1))
-                                    }}
-                                    className="text-black text-[20px]"
-                                >
-                                    -
-                                </button>
-                            </div>
-                        </DropdownMenuItem>
-
-                        <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="text-gray-600 text-[18px] flex items-center justify-between" >
-                            
-
-                            <span className="flex gap-2">
-                                <span>{childrenGuest}</span>
-                                <span>Children</span>
-                            </span>
-                        
-                            <div className="flex items-center gap-5">
-                                <button
-                                    type="button"
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        e.stopPropagation()
-                                        setChidrenGuest((prev) => prev + 1)
-                                    }}
-                                    className="text-black text-[20px]"
-                                >
-                                    +
-                                </button>
-
-
-
-                                <button
-                                    type="button"
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        e.stopPropagation()
-                                        setChidrenGuest((prev) => Math.max(0, prev - 1))
-                                    }}
-                                    className="text-black text-[20px]"
-                                >
-                                    -
-                                </button>
-                            </div>
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+            {/* Date to */}
+            <div className="bg-white flex items-center px-5 py-4 md:py-0 md:h-20 text-gray-600 border-b md:border-b-0 md:border-r border-gray-200">
+                <BookDate text="Date To" />
             </div>
-            <button className="h-full pl-10 pr-10 bg-orange-600 rounded-tr-[10px] rounded-br-[10px] text-xl text-white">
+
+            {/* Guests */}
+            <DropdownMenu>
+                <DropdownMenuTrigger className="bg-white flex flex-row items-center justify-between gap-3 px-5 py-4 md:py-0 md:h-20 text-gray-600 border-b md:border-b-0 md:border-r border-gray-200 text-sm">
+                    <span className="flex items-center gap-2">
+                        <img src={guest} alt="Guests" className="w-4 h-4" />
+                        Guests {allGuests}
+                    </span>
+                    <ChevronDownIcon className="w-4 h-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-48">
+                    {[
+                        { label: "Adult", value: adultGuest, setter: setAdultGuests },
+                        { label: "Youth", value: youthGuest, setter: setYouthGuest },
+                        { label: "Children", value: childrenGuest, setter: setChidrenGuest },
+                    ].map(({ label, value, setter }) => (
+                        <DropdownMenuItem key={label} onSelect={(e) => e.preventDefault()} className="flex items-center justify-between text-gray-600">
+                            <span>{value} {label}</span>
+                            <div className="flex items-center gap-3">
+                                <button type="button" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setter((p) => p + 1) }} className="text-black text-lg font-bold">+</button>
+                                <button type="button" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setter((p) => Math.max(0, p - 1)) }} className="text-black text-lg font-bold">−</button>
+                            </div>
+                        </DropdownMenuItem>
+                    ))}
+                </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Search */}
+            <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-4 md:py-0 md:h-20 text-sm transition-colors duration-200">
                 Search
             </button>
-
         </form>
     )
 }
-
 
 export default SearchForm

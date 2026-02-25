@@ -43,9 +43,9 @@ const ContactInfo = () => (
 )
 
 const ContactForm = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+    <div className="flex flex-col md:flex-row gap-10 items-start">
         {/* Form */}
-        <div>
+        <div className="w-full">
             <p className="text-orange-500 text-sm font-semibold uppercase tracking-widest mb-2">Get In Touch</p>
             <h2 className="text-3xl font-bold text-gray-800 mb-1">Send Us a Message</h2>
             <div className="w-12 h-1 bg-orange-500 rounded mb-6" />
@@ -94,8 +94,8 @@ const ContactForm = () => (
             </form>
         </div>
 
-        {/* Map placeholder */}
-        <div className="rounded-md overflow-hidden shadow-sm border border-gray-100 h-full min-h-80">
+        {/* Map */}
+        <div className="w-full rounded-md overflow-hidden shadow-sm border border-gray-100" style={{ minHeight: "360px" }}>
             <iframe
                 title="Location Map"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215573291865!2d-73.98784368459325!3d40.74844154330146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b30eac9f%3A0xaca05ca48ab5c93!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1614962762944!5m2!1sen!2sus"

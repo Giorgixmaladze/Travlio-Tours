@@ -20,15 +20,11 @@ const AnimatedNumber = ({ target }) => {
             ([entry]) => {
                 if (entry.isIntersecting && !started.current) {
                     started.current = true
-                    const duration = 1800
-                    const step = Math.ceil(target / (duration / 16))
+                    const step = Math.ceil(target / (1800 / 16))
                     const timer = setInterval(() => {
                         setCount((prev) => {
                             const next = prev + step
-                            if (next >= target) {
-                                clearInterval(timer)
-                                return target
-                            }
+                            if (next >= target) { clearInterval(timer); return target }
                             return next
                         })
                     }, 16)
@@ -45,22 +41,22 @@ const AnimatedNumber = ({ target }) => {
 
 const Trending = () => {
     return (
-        <div className="flex flex-col items-center py-20 gap-5">
-            <div className="flex flex-col items-center gap-2 mb-4">
-                <h3 className="font-medium text-gray-500 text-xl italic">Trending Event Of The Week</h3>
-                <h2 className="text-gray-800 font-bold text-4xl">Trending Events</h2>
+        <div className="flex flex-col items-center py-16 gap-5">
+            <div className="flex flex-col items-center gap-2 mb-4 px-4 text-center">
+                <h3 className="font-medium text-gray-500 text-lg md:text-xl italic">Trending Event Of The Week</h3>
+                <h2 className="text-gray-800 font-bold text-3xl md:text-4xl">Trending Events</h2>
                 <div className="w-16 h-1 bg-orange-500 rounded mt-2" />
             </div>
 
             <div className="w-full bg-orange-500">
                 <div className="max-w-5xl mx-auto px-4 py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
                     {stats.map(({ icon: Icon, target, label }) => (
-                        <div key={label} className="flex flex-col items-center gap-3 text-white">
-                            <Icon className="size-14" />
-                            <h3 className="text-4xl font-bold">
+                        <div key={label} className="flex flex-col items-center gap-2 text-white text-center">
+                            <Icon className="size-10 md:size-14" />
+                            <h3 className="text-3xl md:text-4xl font-bold">
                                 <AnimatedNumber target={target} />
                             </h3>
-                            <p className="text-white/80 text-sm text-center">{label}</p>
+                            <p className="text-white/80 text-xs md:text-sm">{label}</p>
                         </div>
                     ))}
                 </div>

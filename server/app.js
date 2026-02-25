@@ -1,5 +1,5 @@
 const express = require("express")
-const dotenv = require("dotenv") 
+const dotenv = require("dotenv")
 dotenv.config()
 const mongoose = require("mongoose")
 const app = express()
@@ -10,13 +10,13 @@ const reviewsRouter = require("./router/reviews.router")
 const staffRouter = require("./router/staff.router")
 
 app.use(cors({
-    origin:"https://travlio-tours.onrender.com",
-    credentials:true
+    origin: ["http://localhost:5173", "https://travlio-tours.onrender.com"],
+    credentials: true
 }))
 app.use(express.json())
 app.use("/api/tours", toursRouter)
-app.use("/api/reviews",reviewsRouter)
-app.use("/api/staff",staffRouter)
+app.use("/api/reviews", reviewsRouter)
+app.use("/api/staff", staffRouter)
 
 dns.setServers(["8.8.8.8", "8.8.4.4"])
 
