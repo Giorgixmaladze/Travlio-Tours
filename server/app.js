@@ -10,7 +10,7 @@ const reviewsRouter = require("./router/reviews.router")
 const staffRouter = require("./router/staff.router")
 
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:"https://travlio-tours.onrender.com",
     credentials:true
 }))
 app.use(express.json())
