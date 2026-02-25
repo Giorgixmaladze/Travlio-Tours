@@ -5,20 +5,26 @@ import StayingCard from "./StayingCard"
 import CarouselComp from "../CarouselComp"
 
 const Staying = () => {
-
     const { popularTours, loading } = useContext(ToursContext)
     return (
-        <div className="bg-[#f7f9fc] pt-20 flex flex-col items-center">
-            <div className="flex flex-col items-center gap-5">
-                <h3 className="font-medium  text-gray-600  text-2xl"><i>Best Staying Places</i></h3>
-                <h2 className="text-gray-800 font-bold text-5xl"> Best Staying Places</h2>
-            </div>
-            <div className="w-10/12 flex justify-center pb-20 pt-15">
-                {loading ? (
-                    <Spinner className="text-orange-500 size-10" />
-                ) : (
-                    <CarouselComp iterable={popularTours} renderItem={(tour)=> <StayingCard tour={tour}/>}/>
-                )}
+        <div className="bg-[#f7f9fc] py-20">
+            <div className="max-w-6xl mx-auto px-4">
+                {/* Section header */}
+                <div className="flex flex-col items-center gap-2 mb-12">
+                    <h3 className="font-medium text-gray-500 text-xl italic">Hand-Picked Destinations</h3>
+                    <h2 className="text-gray-800 font-bold text-4xl">Best Staying Places</h2>
+                    <div className="w-16 h-1 bg-orange-500 rounded mt-2" />
+                </div>
+
+                <div className="w-full px-8">
+                    {loading ? (
+                        <div className="flex justify-center">
+                            <Spinner className="text-orange-500 size-10" />
+                        </div>
+                    ) : (
+                        <CarouselComp iterable={popularTours} renderItem={(tour) => <StayingCard tour={tour} />} />
+                    )}
+                </div>
             </div>
         </div>
     )

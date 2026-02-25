@@ -7,6 +7,7 @@ const toursRouter = require("./router/tours.router")
 const cors = require("cors")
 const dns = require("dns")
 const reviewsRouter = require("./router/reviews.router")
+const staffRouter = require("./router/staff.router")
 
 app.use(cors({
     origin:"http://localhost:5173",
@@ -15,6 +16,7 @@ app.use(cors({
 app.use(express.json())
 app.use("/api/tours", toursRouter)
 app.use("/api/reviews",reviewsRouter)
+app.use("/api/staff",staffRouter)
 
 dns.setServers(["8.8.8.8", "8.8.4.4"])
 
