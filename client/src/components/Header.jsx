@@ -50,9 +50,9 @@ const Header = () => {
                 {/* Desktop sign in */}
                 <span className="hidden md:flex items-center gap-3">
                     <img src={account} alt="Account icon" />
-                    <a href="" className="text-gray-800 text-sm hover:text-orange-500 transition-colors duration-300 font-medium">
+                    <Link to="/signin" className="text-gray-800 text-sm hover:text-orange-500 transition-colors duration-300 font-medium">
                         Sign in
-                    </a>
+                    </Link>
                 </span>
 
                 {/* Mobile hamburger button */}
@@ -85,9 +85,9 @@ const Header = () => {
                             )
                         })}
                         <li className="px-6 py-4">
-                            <a href="" className="flex items-center gap-2 text-sm text-gray-700 font-medium">
+                            <Link to="/signin" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 text-sm text-gray-700 font-medium hover:text-orange-500 transition-colors">
                                 <img src={account} alt="Account" className="w-5" /> Sign in
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
