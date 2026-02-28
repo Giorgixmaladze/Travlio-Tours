@@ -14,6 +14,7 @@ import ToursProvider from './context/ToursContext'
 import ReviewsProvider from './context/ReviewsContext'
 import { Routes, Route } from 'react-router-dom'
 import StaffContextProvider from './context/StaffContext'
+import AuthProvider from './context/AuthContext'
 function App() {
 
   return (
@@ -21,6 +22,7 @@ function App() {
       <ToursProvider>
         <ReviewsProvider>
           <StaffContextProvider>
+            <AuthProvider>
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/tours' element={<Tours />} />
@@ -30,6 +32,7 @@ function App() {
               <Route path='/signin' element={<SignIn />} />
               <Route path='/signup' element={<SignUp />} />
             </Routes>
+            </AuthProvider>
           </StaffContextProvider>
         </ReviewsProvider>
       </ToursProvider>
