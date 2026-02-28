@@ -29,11 +29,16 @@ const getFeatureIcon = (feature) => {
 const defaultIcons = [FaCoffee, FaUtensils, FaWifi, FaTv]
 
 const TourList = () => {
-    const { tours } = useContext(ToursContext)
+
+    const { tours,loading } = useContext(ToursContext)
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-10 w-full">
-            {tours.map((tour, idx) => {
+            {loading ? (
+                <div className="flex items-center justify-center w-full h-full">
+                    <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-orange-500"></div>
+                </div>
+            ) : tours.map((tour, idx) => {
                 const icons =
                     tour.features && tour.features.length > 0
                         ? tour.features.slice(0, 4).map(getFeatureIcon)

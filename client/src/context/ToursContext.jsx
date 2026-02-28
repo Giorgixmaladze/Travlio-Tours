@@ -30,7 +30,7 @@ const ToursProvider = ({ children }) => {
 
 
     return (
-        <ToursContext.Provider value={{ tours, loading, popularTours, tours }}>
+        <ToursContext.Provider value={{ tours, loading, popularTours }}>
             {children}
         </ToursContext.Provider>
     )
