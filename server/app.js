@@ -9,9 +9,9 @@ const dns = require("dns")
 const reviewsRouter = require("./router/reviews.router")
 const staffRouter = require("./router/staff.router")
 const authRouter = require("./router/auth.router")
-
+const path = require("path")
 app.use(cors({
-    origin: ["http://localhost:5174", "https://travlio-tours.onrender.com"],
+    origin:"https://travlio-tours.onrender.com",
     credentials: true
 }))
 app.use(express.json())
@@ -22,6 +22,7 @@ app.use("/api/staff", staffRouter)
 app.use("/api/auth", authRouter)
 
 dns.setServers(["8.8.8.8", "8.8.4.4"])
+app.use(express.static(path.join(__dirname, "dist")))
 
 mongoose.connect(process.env.MONGO_URL)
     .then(() => {
