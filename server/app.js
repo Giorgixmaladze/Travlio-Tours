@@ -22,10 +22,10 @@ app.use("/api/staff", staffRouter)
 app.use("/api/auth", authRouter)
 
 dns.setServers(["8.8.8.8", "8.8.4.4"])
-// app.use(express.static(path.join(__dirname, "dist")))
-// app.get(/.*/, (req, res) => {
-//     res.sendFile(path.join(__dirname, "dist", "index.html"));
-// });
+app.use(express.static(path.join(__dirname, "dist")))
+app.get(/.*/, (req, res) => {
+    res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 
 mongoose.connect(process.env.MONGO_URL)
     .then(() => {
