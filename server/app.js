@@ -11,7 +11,7 @@ const staffRouter = require("./router/staff.router")
 const authRouter = require("./router/auth.router")
 const path = require("path")
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://travlio-tours.onrender.com",
     credentials: true
 }))
 app.use(express.json())
