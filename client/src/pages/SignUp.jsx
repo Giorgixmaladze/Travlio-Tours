@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock, FaUser, FaGoogle, FaFacebookF } from "react-icons/fa";
 import logo from "../assets/logo.png";
 import { useContext } from "react";
@@ -17,6 +17,9 @@ import gsap from "gsap";
 
 const SignUp = () => {
     const { signup } = useContext(AuthContext)
+    const navigate = useNavigate();
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false)
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -64,16 +67,24 @@ const SignUp = () => {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        const formData = new FormData(e.target)
+        setError(null);
+        setLoading(true);
+        const formDataObj = new FormData(e.target)
         const data = {
-            name: formData.get("name"),
-            email: formData.get("email"),
-            password: formData.get("password"),
-            role: formData.get("role")
+            name: formDataObj.get("name"),
+            email: formDataObj.get("email"),
+            password: formDataObj.get("password"),
+            role: formDataObj.get("role")
         }
-        signup(data)
+        const result = await signup(data)
+        setLoading(false);
+        if (result && !result.success) {
+            setError(result.message);
+        } else if (result && result.success) {
+            navigate("/signin");
+        }
     }
 
     return (
@@ -112,7 +123,16 @@ const SignUp = () => {
                             </Link>
                         </div>
                         <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2 sign-up-form-item">Create an account</h2>
-                        <p className="text-gray-500 mb-8 sign-up-form-item">Fill in your details below to get started.</p>
+                        <p className="text-gray-500 mb-6 sign-up-form-item">Fill in your details below to get started.</p>
+
+                        {error && (
+                            <div className="bg-red-50 text-red-600 p-3 rounded-xl mb-6 text-sm flex items-center gap-2 sign-up-form-item border border-red-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                                </svg>
+                                {error}
+                            </div>
+                        )}
 
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="sign-up-form-item">
@@ -179,7 +199,7 @@ const SignUp = () => {
                                         <Select
                                             onValueChange={(value) => setFormData({ ...formData, role: value })}
                                             value={formData.role}
-                                            required
+                                            required name="role"
                                         >
                                             <SelectTrigger className="w-full pl-10 pr-4 py-2.5 h-auto text-base border-gray-200 rounded-xl bg-white shadow-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                                                 <SelectValue placeholder="Select role" />
@@ -207,9 +227,10 @@ const SignUp = () => {
 
                             <button
                                 type="submit"
-                                className="w-full bg-gray-900 hover:bg-black text-white font-medium py-3 rounded-xl transition-colors duration-300 active:scale-[0.98] shadow-lg shadow-gray-900/30 mt-2 sign-up-form-item"
+                                disabled={loading}
+                                className="w-full bg-gray-900 hover:bg-black text-white font-medium py-3 rounded-xl transition-colors duration-300 active:scale-[0.98] shadow-lg shadow-gray-900/30 mt-2 sign-up-form-item disabled:opacity-70 disabled:cursor-not-allowed"
                             >
-                                Create Account
+                                {loading ? "Creating Account..." : "Create Account"}
                             </button>
                         </form>
 
