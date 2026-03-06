@@ -105,7 +105,7 @@ const verifyEmail = async (req, res, next) => {
         user.verificationCode = undefined;
         await user.save({ validateBeforeSave: false });
 
-        res.redirect(`http://localhost:5173/verify-success`);
+        res.redirect(`https://travlio-tours.onrender.com/verify-success`);
     } catch (error) {
         next(error);
     }
