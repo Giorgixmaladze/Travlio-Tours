@@ -1,15 +1,45 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import { FaEnvelope, FaLock, FaGoogle, FaFacebookF } from "react-icons/fa";
 import logo from "../assets/logo.png";
 import { Input } from "@/components/ui/input";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 
 const SignIn = () => {
-
+    const navigate = useNavigate()
+    const { login } = useContext(AuthContext)
+    const [formData, setFormData] = useState({
+        email: "",
+        password: ""
+    })
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false)
     const containerRef = useRef(null)
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value
+        }))
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setError(null)
+        setLoading(true)
+        const result = await login(formData)
+        setLoading(false)
+        if (result && !result.success) {
+            setError(result.message);
+        } else if (result && result.success) {
+            navigate("/");
+        }
+    }
 
     useGSAP(() => {
         const tl = gsap.timeline();
@@ -80,9 +110,18 @@ const SignIn = () => {
                             </Link>
                         </div>
                         <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2 sign-in-form-item">Sign in to your account</h2>
-                        <p className="text-gray-500 mb-8 sign-in-form-item">Enter your details to access your dashboard.</p>
+                        <p className="text-gray-500 mb-6 sign-in-form-item">Enter your details to access your dashboard.</p>
 
-                        <form className="space-y-5">
+                        {error && (
+                            <div className="bg-red-50 text-red-600 p-3 rounded-xl mb-6 text-sm flex items-center gap-2 sign-in-form-item border border-red-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                                </svg>
+                                {error}
+                            </div>
+                        )}
+
+                        <form className="space-y-5" onSubmit={handleSubmit} onChange={handleChange}>
                             <div className="sign-in-form-item">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
                                 <div className="relative">
@@ -135,9 +174,10 @@ const SignIn = () => {
 
                             <button
                                 type="submit"
-                                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 rounded-xl transition-colors duration-300 active:scale-[0.98] shadow-lg shadow-orange-500/30 sign-in-form-item"
+                                disabled={loading}
+                                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 rounded-xl transition-colors duration-300 active:scale-[0.98] shadow-lg shadow-orange-500/30 sign-in-form-item disabled:opacity-70 disabled:cursor-not-allowed"
                             >
-                                Sign In
+                                {loading ? "Signing In..." : "Sign In"}
                             </button>
                         </form>
 
