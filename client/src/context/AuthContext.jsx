@@ -11,7 +11,7 @@ const AuthProvider = ({ children }) => {
 
     const signup = async (userData) => {
         try {
-            const response = await axios.post("http://localhost:3000/api/auth/signup", userData)
+            const response = await axios.post(import.meta.env.VITE_API_URL + "/api/auth/signup", userData)
             console.log(response.data)
             return { success: true, data: response.data };
         } catch (error) {
@@ -27,7 +27,7 @@ const AuthProvider = ({ children }) => {
 
     const login = async (userData) => {
         try {
-            const res = await axios.post("http://localhost:3000/api/auth/login", userData)
+            const res = await axios.post(import.meta.env.VITE_API_URL + "/api/auth/login", userData)
             console.log(res.data)
             return { success: true, data: res.data };
         } catch (error) {
