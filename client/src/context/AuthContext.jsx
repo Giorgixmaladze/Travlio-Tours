@@ -11,7 +11,7 @@ const AuthProvider = ({ children }) => {
 
     const signup = async (userData) => {
         try {
-            const response = await axios.post(import.meta.env.VITE_API_URL + "/api/auth/register", userData)
+            const response = await axios.post(import.meta.env.VITE_API_URL + "/api/auth/signup", userData)
             console.log(response.data)
             return { success: true, data: response.data };
         } catch (error) {
