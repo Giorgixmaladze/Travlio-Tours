@@ -11,8 +11,17 @@ const staffRouter = require("./router/staff.router")
 const authRouter = require("./router/auth.router")
 const path = require("path")
 const cookieParser = require("cookie-parser")
+const allowedOrigins = [
+    "https://travlio-tours.onrender.com",
+]
 app.use(cors({
-    origin: "https://travlio-tours.onrender.com",
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true)
+        } else {
+            callback(new Error("Not allowed by CORS"))
+        }
+    },
     credentials: true
 }))
 app.use(express.json())

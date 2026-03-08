@@ -45,7 +45,7 @@ const createUser = async (req, res, next) => {
         const url = `https://travlio-tours.onrender.com/api/auth/register/verify/${code}`;
 
 
-        sendWelcomeEmail(user.email, user.name, url)
+        await sendWelcomeEmail(user.email, user.name, url)
 
         res.status(200).json({
             success: true,
