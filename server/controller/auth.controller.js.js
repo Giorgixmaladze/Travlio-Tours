@@ -42,7 +42,7 @@ const createUser = async (req, res, next) => {
         await user.save({ validateBeforeSave: false })
 
 
-        const url = `${req.protocol}://${req.get("host")}/api/auth/register/verify/${code}`;
+        const url = "https://travlio-tours.onrender.com/verify-success";
 
 
         await sendWelcomeEmail(user.email, user.name, url)
