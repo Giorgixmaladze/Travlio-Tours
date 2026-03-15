@@ -35,41 +35,38 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 const createUser = async (req, res, next) => {
+    let user;
     try {
-        const user = await User.create(req.body)
+        user = await User.create(req.body)
 
         const code = user.createVerificationCode()
         await user.save({ validateBeforeSave: false })
 
         const url = `https://travlio-tours.onrender.com/api/auth/register/verify/${code}`;
 
+        // Await the email — so we know it actually sent before responding
+        await sendWelcomeEmail(user.email, user.name, url)
 
-
-
-        sendWelcomeEmail(user.email, user.name, url).catch((err) => {
-            console.error("[Email Error] Failed to send verification email:")
-            console.error("  To:", user.email)
-            console.error("  Message:", err.message)
-            console.error("  Stack:", err.stack)
-        })
-
-
-        // Respond immediately — don't make the user wait for the email
         res.status(200).json({
             success: true,
             message: "User created successfully. Please check your email to verify your account."
         })
 
-        // Send email in the background after response is sent
-
-
     } catch (error) {
+        // If user was created but email failed → delete them so they can try again
+        if (user && user._id) {
+            await User.findByIdAndDelete(user._id).catch(() => { })
+        }
+
         if (error.code === 11000) {
             return res.status(400).json({ message: "Duplicate user detected" });
         }
+
+        console.error("[Signup Error]", error.message)
         next(error)
     }
 }
+
 
 
 const login = async (req, res, next) => {
@@ -121,5 +118,7 @@ const verifyEmail = async (req, res, next) => {
         next(error);
     }
 }
+
+
 
 module.exports = { createUser, login, verifyEmail }
