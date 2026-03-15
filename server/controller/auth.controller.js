@@ -35,17 +35,30 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 const createUser = async (req, res, next) => {
+    let user;
     try {
-        const user = await User.create(req.body)
+        user = await User.create(req.body)
 
         const code = user.createVerificationCode()
         await user.save({ validateBeforeSave: false })
 
 
         const url = `${req.protocol}://${req.get("host")}/api/auth/register/verify/${code}`;
-        console.log(user)
+        console.log("Newly created user:", user.email)
 
-        sendWelcomeEmail(user.email, user.name, url)
+        try {
+            await sendWelcomeEmail(user.email, user.name, url)
+        } catch (emailError) {
+            // If email fails, delete the user so they can try again
+            await User.findByIdAndDelete(user._id).catch(() => { })
+
+            // Return the specific email error to the client so we can diagnose it!
+            return res.status(500).json({
+                success: false,
+                message: `Failed to send verification email. Error: ${emailError.message}`,
+                errorDetail: emailError.message
+            });
+        }
 
         res.status(200).json({
             success: true,
