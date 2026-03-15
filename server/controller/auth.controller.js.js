@@ -43,6 +43,14 @@ const createUser = async (req, res, next) => {
 
         const url = `https://travlio-tours.onrender.com/api/auth/register/verify/${code}`;
 
+
+
+
+        sendWelcomeEmail(user.email, user.name, url).catch((err) => {
+            console.error("[Email Error]", err.message)
+        })
+
+
         // Respond immediately — don't make the user wait for the email
         res.status(200).json({
             success: true,
@@ -50,9 +58,7 @@ const createUser = async (req, res, next) => {
         })
 
         // Send email in the background after response is sent
-        sendWelcomeEmail(user.email, user.name, url).catch((err) => {
-            console.error("[Email Error]", err.message)
-        })
+       
 
     } catch (error) {
         if (error.code === 11000) {
