@@ -1,14 +1,14 @@
 const nodemailer = require("nodemailer")
 
-
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com", 
-  port: 587,               
-  secure: false,            
-  auth: {
-    user: process.env.EMAIL_ADDRESS,        
-    pass: process.env.EMAIL_API, 
-  },
+    service: "gmail",
+    auth: {
+        type: "OAuth2",
+        user: process.env.EMAIL_ADDRESS,
+        clientId: process.env.GMAIL_CLIENT_ID,
+        clientSecret: process.env.GMAIL_CLIENT_SECRET,
+        refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+    },
 });
 
 
@@ -17,8 +17,8 @@ const transporter = nodemailer.createTransport({
 const sendWelcomeEmail = async (userEmail, userName, url) => {
   try {
     const info = await transporter.sendMail({
-      from: process.env.EMAIL_ADDRESS, 
-      to: userEmail,                                  
+      from: process.env.EMAIL_ADDRESS,
+      to: userEmail,
       subject: "მოგესალმებით Travlio-ზე! 🌍",
       text: `გამარჯობა ${userName}, გთხოვთ დაადასტუროთ თქვენი რეგისტრაცია ჩვენს პლატფორმაზე.`,
       html: `
