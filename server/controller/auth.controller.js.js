@@ -47,7 +47,10 @@ const createUser = async (req, res, next) => {
 
 
         sendWelcomeEmail(user.email, user.name, url).catch((err) => {
-            console.error("[Email Error]", err.message)
+            console.error("[Email Error] Failed to send verification email:")
+            console.error("  To:", user.email)
+            console.error("  Message:", err.message)
+            console.error("  Stack:", err.stack)
         })
 
 
@@ -58,7 +61,7 @@ const createUser = async (req, res, next) => {
         })
 
         // Send email in the background after response is sent
-       
+
 
     } catch (error) {
         if (error.code === 11000) {
