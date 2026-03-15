@@ -35,17 +35,17 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 const createUser = async (req, res, next) => {
-    let user;
     try {
-        user = await User.create(req.body)
+        const user = await User.create(req.body)
 
         const code = user.createVerificationCode()
         await user.save({ validateBeforeSave: false })
 
-        const url = `https://travlio-tours.onrender.com/api/auth/register/verify/${code}`;
 
-        // Await the email — so we know it actually sent before responding
-        await sendWelcomeEmail(user.email, user.name, url)
+        const url = `${req.protocol}://${req.get("host")}/api/auth/register/verify/${code}`;
+        console.log(user)
+
+        sendWelcomeEmail(user.email, user.name, url)
 
         res.status(200).json({
             success: true,
@@ -53,16 +53,9 @@ const createUser = async (req, res, next) => {
         })
 
     } catch (error) {
-        // If user was created but email failed → delete them so they can try again
-        if (user && user._id) {
-            await User.findByIdAndDelete(user._id).catch(() => { })
-        }
-
         if (error.code === 11000) {
             return res.status(400).json({ message: "Duplicate user detected" });
         }
-
-        console.error("[Signup Error]", error.message)
         next(error)
     }
 }
@@ -119,6 +112,47 @@ const verifyEmail = async (req, res, next) => {
     }
 }
 
+const nodemailer = require("nodemailer")
 
+const testEmail = async (req, res) => {
+    const result = {
+        env: {
+            EMAIL_ADDRESS: process.env.EMAIL_ADDRESS || "❌ NOT SET",
+            EMAIL_API: process.env.EMAIL_API ? `✅ SET (${process.env.EMAIL_API.length} chars)` : "❌ NOT SET",
+        },
+        smtp: null,
+        send: null,
+    }
 
-module.exports = { createUser, login, verifyEmail }
+    try {
+        const transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
+            auth: {
+                user: process.env.EMAIL_ADDRESS,
+                pass: process.env.EMAIL_API,
+            },
+        })
+
+        await transporter.verify()
+        result.smtp = "✅ Connection OK"
+
+        const info = await transporter.sendMail({
+            from: process.env.EMAIL_ADDRESS,
+            to: process.env.EMAIL_ADDRESS,
+            subject: "Travlio Test Email from Render",
+            text: "If you see this, email is working on Render!",
+        })
+        result.send = `✅ Sent! ID: ${info.messageId}`
+    } catch (err) {
+        result.error = err.message
+        result.code = err.code
+        result.smtp = result.smtp || "❌ Failed"
+        result.send = result.send || "❌ Failed"
+    }
+
+    res.json(result)
+}
+
+module.exports = { createUser, login, verifyEmail, testEmail }
