@@ -2,12 +2,12 @@ const nodemailer = require("nodemailer")
 
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com", // აქ ჩაწერთ თქვენი პროვაიდერის SMTP-ს
-  port: 465,               // ჩვეულებრივ 465 ან 587
-  secure: true,            // true 465-ისთვის, false სხვებისთვის
+  host: "smtp.gmail.com", 
+  port: 587,               
+  secure: false,            
   auth: {
-    user: process.env.EMAIL_ADDRESS,        // მომხმარებლის სახელი (Resend-ის შემთხვევაში "resend")
-    pass: process.env.EMAIL_API, // აქ ჩაწერთ თქვენს API Key-ს
+    user: process.env.EMAIL_ADDRESS,        
+    pass: process.env.EMAIL_API, 
   },
 });
 
@@ -17,8 +17,8 @@ const transporter = nodemailer.createTransport({
 const sendWelcomeEmail = async (userEmail, userName, url) => {
   try {
     const info = await transporter.sendMail({
-      from: process.env.EMAIL_ADDRESS, // თქვენი დადასტურებული იმეილი
-      to: userEmail,                                  // ვისთან იგზავნება
+      from: process.env.EMAIL_ADDRESS, 
+      to: userEmail,                                  
       subject: "მოგესალმებით Travlio-ზე! 🌍",
       text: `გამარჯობა ${userName}, გთხოვთ დაადასტუროთ თქვენი რეგისტრაცია ჩვენს პლატფორმაზე.`,
       html: `
