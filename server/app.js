@@ -15,13 +15,7 @@ const allowedOrigins = [
     "https://travlio-tours.onrender.com",
 ]
 app.use(cors({
-    origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true)
-        } else {
-            callback(new Error("Not allowed by CORS"))
-        }
-    },
+    origin:  "https://travlio-tours.onrender.com",
     credentials: true
 }))
 app.use(express.json())
