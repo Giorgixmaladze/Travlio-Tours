@@ -1,13 +1,12 @@
 const User = require("../model/user.model.js")
 const bcrypt = require("bcrypt")
-const sendWelcomeEmail = require("../middleware/email.js")
 const jwt = require("jsonwebtoken")
 
 
 
 const signToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_KEY, {
-        expiresIn: process.env.JWT_EXPIRES_IN || "1h",
+        expiresIn: process.env.JWT_EXPIRES_IN || "7d",
     });
 };
 
@@ -35,35 +34,16 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 const createUser = async (req, res, next) => {
-    let user;
     try {
-        user = await User.create(req.body)
+        const user = await User.create(req.body)
 
-        const code = user.createVerificationCode()
         await user.save({ validateBeforeSave: false })
-
-
-        const url = `${req.protocol}://${req.get("host")}/api/auth/register/verify/${code}`;
-        console.log("Newly created user:", user.email)
-
-        try {
-            await sendWelcomeEmail(user.email, user.name, url)
-        } catch (emailError) {
-            // If email fails, delete the user so they can try again
-            await User.findByIdAndDelete(user._id).catch(() => { })
-
-            // Return the specific email error to the client so we can diagnose it!
-            return res.status(500).json({
-                success: false,
-                message: `Failed to send verification email. Error: ${emailError.message}`,
-                errorDetail: emailError.message
-            });
-        }
 
         res.status(200).json({
             success: true,
             message: "User created successfully. Please check your email to verify your account."
         })
+        return createSendToken(user, 200, res)
 
     } catch (error) {
         if (error.code === 11000) {
@@ -89,10 +69,6 @@ const login = async (req, res, next) => {
         const isPasswordValid = await user.comparePassword(password, user.password)
         if (!isPasswordValid) {
             return res.status(401).json({ message: "Invalid password" })
-        }
-
-        if (!user.isVerified) {
-            return res.status(403).json({ message: "Please verify your email address before logging in." })
         }
 
         // Remove password from the user object before sending it to the client
@@ -125,47 +101,6 @@ const verifyEmail = async (req, res, next) => {
     }
 }
 
-const nodemailer = require("nodemailer")
 
-const testEmail = async (req, res) => {
-    const result = {
-        env: {
-            EMAIL_ADDRESS: process.env.EMAIL_ADDRESS || "❌ NOT SET",
-            EMAIL_API: process.env.EMAIL_API ? `✅ SET (${process.env.EMAIL_API.length} chars)` : "❌ NOT SET",
-        },
-        smtp: null,
-        send: null,
-    }
 
-    try {
-        const transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 465,
-            secure: true,
-            auth: {
-                user: process.env.EMAIL_ADDRESS,
-                pass: process.env.EMAIL_API,
-            },
-        })
-
-        await transporter.verify()
-        result.smtp = "✅ Connection OK"
-
-        const info = await transporter.sendMail({
-            from: process.env.EMAIL_ADDRESS,
-            to: process.env.EMAIL_ADDRESS,
-            subject: "Travlio Test Email from Render",
-            text: "If you see this, email is working on Render!",
-        })
-        result.send = `✅ Sent! ID: ${info.messageId}`
-    } catch (err) {
-        result.error = err.message
-        result.code = err.code
-        result.smtp = result.smtp || "❌ Failed"
-        result.send = result.send || "❌ Failed"
-    }
-
-    res.json(result)
-}
-
-module.exports = { createUser, login, verifyEmail, testEmail }
+module.exports = { createUser, login, verifyEmail }

@@ -22,14 +22,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ["user", "admin"]
     },
-    isVerified: {
-        type: Boolean,
-        default: false
-    },
-    verificationCode: {
-        type: String,
-        select: false
-    }
+
 })
 
 
@@ -44,11 +37,6 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
     return await bcrypt.compare(candidatePassword, this.password)
 }
 
-userSchema.methods.createVerificationCode = function () {
-    const code = crypto.randomBytes(12).toString("hex");
-    this.verificationCode = code;
-    return code;
-};
 
 const User = mongoose.model("User", userSchema)
 module.exports = User
