@@ -1,9 +1,9 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { FaBars, FaTimes } from "react-icons/fa"
 import logo from "../assets/logo.png"
 import account from "../assets/account.svg"
-
+import { AuthContext } from "../context/AuthContext"
 const navLinks = [
     { to: "/", label: "Home" },
     { to: "/tours", label: "Tours" },
@@ -15,7 +15,7 @@ const navLinks = [
 const Header = () => {
     const { pathname } = useLocation()
     const [menuOpen, setMenuOpen] = useState(false)
-
+    const {user} = useContext(AuthContext)
     return (
         <header className="w-full bg-white sticky top-0 z-50 shadow-sm border-b border-gray-100">
             <div className="max-w-6xl mx-auto px-4 h-20 flex items-center justify-between">
@@ -48,12 +48,21 @@ const Header = () => {
                 </nav>
 
                 {/* Desktop sign in */}
-                <span className="hidden md:flex items-center gap-3">
-                    <img src={account} alt="Account icon" />
-                    <Link to="/signin" className="text-gray-800 text-sm hover:text-orange-500 transition-colors duration-300 font-medium">
-                        Sign in
-                    </Link>
+                {user ? (
+                    <span className="hidden md:flex items-center gap-3">
+                        <img src={account} alt="Account icon" />
+                        <Link to="/profile" className="text-gray-800 text-sm hover:text-orange-500 transition-colors duration-300 font-medium">
+                            Profile
+                        </Link>
+                    </span>
+                ) : (
+                    <span className="hidden md:flex items-center gap-3">
+                        <img src={account} alt="Account icon" />
+                        <Link to="/signin" className="text-gray-800 text-sm hover:text-orange-500 transition-colors duration-300 font-medium">
+                            Sign in
+                        </Link>
                 </span>
+                )}
 
                 {/* Mobile hamburger button */}
                 <button

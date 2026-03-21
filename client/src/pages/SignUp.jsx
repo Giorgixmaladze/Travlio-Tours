@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock, FaUser, FaGoogle, FaFacebookF } from "react-icons/fa";
 import logo from "../assets/logo.png";
@@ -24,10 +24,29 @@ const SignUp = () => {
         name: "",
         email: "",
         password: "",
-        role: ""
+        role: "",
+        location: ""
     })
 
     const containerRef = useRef(null)
+
+    useEffect(() => {
+        const fetchLocation = async () => {
+            try {
+                const response = await fetch("https://ipapi.co/json/");
+                const data = await response.json();
+                if (data.city && data.country_name) {
+                    setFormData(prev => ({
+                        ...prev,
+                        location: `${data.city}, ${data.country_name}`
+                    }));
+                }
+            } catch (error) {
+                console.error("Error fetching location:", error);
+            }
+        };
+        fetchLocation();
+    }, []);
 
     useGSAP(() => {
         const tl = gsap.timeline();
@@ -76,7 +95,8 @@ const SignUp = () => {
             name: formDataObj.get("name"),
             email: formDataObj.get("email"),
             password: formDataObj.get("password"),
-            role: formDataObj.get("role")
+            role: formDataObj.get("role"),
+            location: formData.location
         }
         const result = await signup(data)
         setLoading(false);

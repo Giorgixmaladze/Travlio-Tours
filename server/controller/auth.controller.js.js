@@ -1,6 +1,5 @@
 const User = require("../model/user.model.js")
 const bcrypt = require("bcrypt")
-const sendWelcomeEmail = require("../middleware/email.js")
 const jwt = require("jsonwebtoken")
 
 
@@ -38,19 +37,16 @@ const createUser = async (req, res, next) => {
     try {
         const user = await User.create(req.body)
 
-        const code = user.createVerificationCode()
+
         await user.save({ validateBeforeSave: false })
 
 
-        const url = `${req.protocol}://${req.get("host")}/api/auth/register/verify/${code}`;
-
-
-        sendWelcomeEmail(user.email, user.name, url)
 
         res.status(200).json({
             success: true,
-            message: "User created successfully. Please check your email to verify your account."
+            message: "User created successfully"
         })
+
 
     } catch (error) {
         if (error.code === 11000) {
@@ -77,10 +73,6 @@ const login = async (req, res, next) => {
             return res.status(401).json({ message: "Invalid password" })
         }
 
-        if (!user.isVerified) {
-            return res.status(403).json({ message: "Please verify your email address before logging in." })
-        }
-
         // Remove password from the user object before sending it to the client
         req.user = user;
 
@@ -91,24 +83,56 @@ const login = async (req, res, next) => {
     }
 }
 
+const logOut = (req, res, next) => {
+    res.clearCookie('lt', {
+        secure: process.env.NODE_ENV === "production",
+        httpOnly: true,
+        sameSite: "lax",
+    })
 
-const verifyEmail = async (req, res, next) => {
+    res.json("logged out !")
+}
+const getMe = async (req, res, next) => {
     try {
-        const { code } = req.params;
-
-        const user = await User.findOne({ verificationCode: code });
-        if (!user) {
-            return res.status(400).json({ message: "Invalid or expired verification code" });
+        const token = req.cookies.lt;
+        if (!token) {
+            return res.status(401).json({ message: "Not logged in" });
         }
 
-        user.isVerified = true;
-        user.verificationCode = undefined;
-        await user.save({ validateBeforeSave: false });
+        const decoded = jwt.verify(token, process.env.JWT_KEY);
+        const user = await User.findById(decoded.id);
 
-        res.redirect(`http://localhost:5173/verify-success`);
+        if (!user) {
+            return res.status(401).json({ message: "User no longer exists" });
+        }
+
+        res.status(200).json({
+            status: "success",
+            data: { user }
+        });
     } catch (error) {
-        next(error);
+        return res.status(401).json({ message: "Invalid or expired token" });
     }
 }
 
-module.exports = { createUser, login, verifyEmail }
+
+const autoLogin = async (req, res, next) => {
+
+    const user = await User.findById(req.user._id);
+    console.log(user)
+    if (!user) {
+        return next(new AppError("User not found", 404));
+    }
+
+    user.password = undefined;
+
+    return res.status(200).json({
+        status: "success",
+        data: {
+            user,
+        },
+    });
+};
+
+
+module.exports = { createUser, login, logOut, getMe, autoLogin }

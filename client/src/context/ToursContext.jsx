@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react"
+import { createContext, useEffect, useState, useCallback } from "react"
 import fetchData from "@/utils/api"
 
 export const ToursContext = createContext()
@@ -29,8 +29,18 @@ const ToursProvider = ({ children }) => {
     }, [])
 
 
+    const getTourById = useCallback(async (id) => {
+        setLoading(true)
+        try {
+            const data = await fetchData(`${import.meta.env.VITE_API_URL}/api/tours/${id}`)
+            return data
+        } finally {
+            setLoading(false)
+        }
+    }, [])
+
     return (
-        <ToursContext.Provider value={{ tours, loading, popularTours }}>
+        <ToursContext.Provider value={{ tours, loading, popularTours, getTourById }}>
             {children}
         </ToursContext.Provider>
     )

@@ -16,10 +16,10 @@ app.use(cors({
     credentials: true
 }))
 app.use(express.json())
+app.use(cookieParser())
 app.use("/api/tours", toursRouter)
 app.use("/api/reviews", reviewsRouter)
 app.use("/api/staff", staffRouter)
-app.use(cookieParser())
 app.use("/api/auth", authRouter)
 
 dns.setServers(["8.8.8.8", "8.8.4.4"])

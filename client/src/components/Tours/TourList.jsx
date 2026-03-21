@@ -1,9 +1,10 @@
 import { useContext } from "react"
+import { Link } from "react-router-dom"
 import { ToursContext } from "@/context/ToursContext"
-import {
+import { 
     FaCoffee, FaUtensils, FaWifi, FaTv, FaSwimmingPool,
-    FaCar, FaSnowflake, FaSpa, FaDumbbell, FaConciergeBell,
-} from "react-icons/fa"
+    FaCar, FaSnowflake, FaSpa, FaDumbbell, FaConciergeBell
+} from "react-icons/fa";
 
 const featureIconMap = {
     coffee: FaCoffee, breakfast: FaCoffee,
@@ -16,17 +17,17 @@ const featureIconMap = {
     spa: FaSpa,
     gym: FaDumbbell, fitness: FaDumbbell,
     concierge: FaConciergeBell,
-}
+};
 
 const getFeatureIcon = (feature) => {
-    const key = feature?.toLowerCase()
+    const key = feature?.toLowerCase();
     for (const [kw, Icon] of Object.entries(featureIconMap)) {
-        if (key?.includes(kw)) return Icon
+        if (key?.includes(kw)) return Icon;
     }
-    return FaConciergeBell
-}
+    return FaConciergeBell;
+};
 
-const defaultIcons = [FaCoffee, FaUtensils, FaWifi, FaTv]
+const defaultIcons = [FaCoffee, FaUtensils, FaWifi, FaTv, FaSwimmingPool];
 
 const TourList = () => {
 
@@ -45,7 +46,8 @@ const TourList = () => {
                         : defaultIcons.slice(0, (idx % 3) + 2)
 
                 return (
-                    <div
+                    <Link
+                        to={`/tours/${tour._id}`}
                         key={tour._id}
                         className="flex flex-col sm:flex-row bg-gray-50 rounded-sm shadow-sm overflow-hidden border border-gray-200 hover:shadow-md transition-shadow duration-300 cursor-pointer"
                     >
@@ -85,7 +87,7 @@ const TourList = () => {
                                 ))}
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 )
             })}
         </div>

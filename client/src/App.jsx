@@ -9,13 +9,14 @@ import Contact from './pages/Contact'
 import Blog from './pages/Blog'
 import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
-import VerifySuccess from './pages/VerifySuccess'
 import SearchProvider from './context/SearchContext'
 import ToursProvider from './context/ToursContext'
 import ReviewsProvider from './context/ReviewsContext'
 import { Routes, Route } from 'react-router-dom'
 import StaffContextProvider from './context/StaffContext'
 import AuthProvider from './context/AuthContext'
+import Profile from './pages/Profile'
+import TourDetails from './pages/TourDetails'
 function App() {
 
   return (
@@ -27,12 +28,13 @@ function App() {
               <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/tours' element={<Tours />} />
+                <Route path='/tours/:id' element={<TourDetails />} />
                 <Route path='/about' element={<About />} />
                 <Route path='/contact' element={<Contact />} />
                 <Route path='/blog' element={<Blog />} />
                 <Route path='/signin' element={<SignIn />} />
                 <Route path='/signup' element={<SignUp />} />
-                <Route path='/verify-success' element={<VerifySuccess />} />
+                <Route path='/profile' element={<Profile />} />
               </Routes>
             </AuthProvider>
           </StaffContextProvider>
