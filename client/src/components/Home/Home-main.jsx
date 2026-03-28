@@ -24,7 +24,7 @@ const HomeMain = () => {
 
                     {/* Search */}
                     <div className="w-full max-w-4xl mt-4 px-2">
-                        <SearchForm />
+                        {/* <SearchForm /> */}
                     </div>
                 </div>
             </div>

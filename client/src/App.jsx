@@ -17,6 +17,7 @@ import StaffContextProvider from './context/StaffContext'
 import AuthProvider from './context/AuthContext'
 import Profile from './pages/Profile'
 import TourDetails from './pages/TourDetails'
+import Booking from './pages/Booking'
 function App() {
 
   return (
@@ -35,6 +36,7 @@ function App() {
                 <Route path='/signin' element={<SignIn />} />
                 <Route path='/signup' element={<SignUp />} />
                 <Route path='/profile' element={<Profile />} />
+                <Route path='/booking/:id' element={<Booking />} />
               </Routes>
             </AuthProvider>
           </StaffContextProvider>

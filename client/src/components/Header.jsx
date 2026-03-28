@@ -15,7 +15,7 @@ const navLinks = [
 const Header = () => {
     const { pathname } = useLocation()
     const [menuOpen, setMenuOpen] = useState(false)
-    const {user} = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
     return (
         <header className="w-full bg-white sticky top-0 z-50 shadow-sm border-b border-gray-100">
             <div className="max-w-6xl mx-auto px-4 h-20 flex items-center justify-between">
@@ -61,7 +61,7 @@ const Header = () => {
                         <Link to="/signin" className="text-gray-800 text-sm hover:text-orange-500 transition-colors duration-300 font-medium">
                             Sign in
                         </Link>
-                </span>
+                    </span>
                 )}
 
                 {/* Mobile hamburger button */}
@@ -94,9 +94,21 @@ const Header = () => {
                             )
                         })}
                         <li className="px-6 py-4">
-                            <Link to="/signin" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 text-sm text-gray-700 font-medium hover:text-orange-500 transition-colors">
-                                <img src={account} alt="Account" className="w-5" /> Sign in
-                            </Link>
+                            {user ? (
+                                <span className="flex items-center gap-3">
+                                    <img src={account} alt="Account icon" />
+                                    <Link to="/profile" className="text-gray-800 text-sm hover:text-orange-500 transition-colors duration-300 font-medium">
+                                        Profile
+                                    </Link>
+                                </span>
+                            ) : (
+                                <span className="flex items-center gap-3">
+                                    <img src={account} alt="Account icon" />
+                                    <Link to="/signin" className="text-gray-800 text-sm hover:text-orange-500 transition-colors duration-300 font-medium">
+                                        Sign in
+                                    </Link>
+                                </span>
+                            )}
                         </li>
                     </ul>
                 </div>

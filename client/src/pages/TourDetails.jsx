@@ -3,16 +3,30 @@ import { useParams, Link } from "react-router-dom";
 import { ToursContext } from "../context/ToursContext";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { 
-    MapPin, Clock, Users, Star, Check, 
-    Share2, Heart, Calendar, ArrowLeft, CheckCircle2
+import {
+    MapPin, Clock, Users, Star, Check,
+    Share2, Heart, ArrowLeft, CheckCircle2
 } from "lucide-react";
-import { 
+import {
     FaCoffee, FaUtensils, FaWifi, FaTv, FaSwimmingPool,
     FaCar, FaSnowflake, FaSpa, FaDumbbell, FaConciergeBell
 } from "react-icons/fa";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { Calendar } from "@/components/ui/calendar"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Button } from "@/components/ui/button"
+import { format } from "date-fns"
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu"
+
+
 
 const featureIconMap = {
     coffee: FaCoffee, breakfast: FaCoffee,
@@ -40,6 +54,12 @@ const TourDetails = () => {
     const { getTourById } = useContext(ToursContext);
     const [tour, setTour] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [date, setDate] = useState(new Date());
+    const [adult, setAdult] = useState(1);
+
+    const [children, setChildren] = useState(0);
+
+    const total = adult  + children;
 
     useEffect(() => {
         const fetchTour = async () => {
@@ -54,8 +74,8 @@ const TourDetails = () => {
         if (!loading && tour) {
             const tl = gsap.timeline();
             tl.from(".tour-hero", { opacity: 0, scale: 1.1, duration: 1.2, ease: "power2.out" })
-              .from(".tour-content", { y: 30, opacity: 0, duration: 0.8 }, "-=0.6")
-              .from(".tour-sidebar", { x: 30, opacity: 0, duration: 0.8 }, "-=0.6");
+                .from(".tour-content", { y: 30, opacity: 0, duration: 0.8 }, "-=0.6")
+                .from(".tour-sidebar", { x: 30, opacity: 0, duration: 0.8 }, "-=0.6");
         }
     }, { dependencies: [loading, tour] });
 
@@ -81,12 +101,12 @@ const TourDetails = () => {
     return (
         <div className="flex flex-col min-h-screen bg-white">
             <Header />
-            
+
             <main className="flex-1 overflow-hidden">
                 {/* Hero Section */}
                 <div className="relative h-[60vh] md:h-[75vh] w-full tour-hero">
-                    <img 
-                        src={tour.image?.url} 
+                    <img
+                        src={tour.image?.url}
                         alt={tour.image?.alt || tour.title}
                         className="w-full h-full object-cover"
                     />
@@ -140,7 +160,7 @@ const TourDetails = () => {
                                     "One's destination is never a place, but a new way of seeing things." – Henry Miller
                                 </p>
                                 <p className="text-gray-700 text-lg leading-relaxed whitespace-pre-line">
-                                    Immerse yourself in the breathtaking beauty of {tour.title}. This carefully curated journey takes you through the most iconic landmarks and hidden gems of {tour.city}. 
+                                    Immerse yourself in the breathtaking beauty of {tour.title}. This carefully curated journey takes you through the most iconic landmarks and hidden gems of {tour.city}.
                                     {"\n\n"}
                                     Whether you're exploring the vibrant local culture, tasting traditional cuisines, or simply soaking in the stunning views, this {tour.duration} adventure promises memories that will last a lifetime. Our expert guides ensure a safe, informative, and deeply engaging experience for all travelers.
                                 </p>
@@ -207,30 +227,71 @@ const TourDetails = () => {
                                 <div className="space-y-4 mb-8">
                                     <div className="relative">
                                         <label className="block text-xs font-bold text-gray-400 uppercase mb-1">Date</label>
-                                        <button className="w-full flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-xl font-medium text-gray-800 hover:bg-gray-100 transition-colors">
-                                            <div className="flex items-center gap-3">
-                                                <Calendar size={18} className="text-orange-500" />
-                                                <span>Select a date</span>
-                                            </div>
-                                        </button>
+                                        <Popover >
+                                            <PopoverTrigger asChild className="w-full flex items-center gap-3 p-4 bg-gray-50 border border-gray-200 rounded-xl font-medium text-gray-800 hover:bg-gray-100 transition-colors">
+
+                                                <Button
+                                                    variant="outline"
+                                                    data-empty={!date}
+                                                    className="w-[212px] justify-between text-left font-normal data-[empty=true]:text-muted-foreground cursor-pointer w-full h-full"
+
+                                                >
+                                                    {date ? format(date, "PPP") : <span>Pick a date</span>}
+
+                                                </Button>
+
+                                            </PopoverTrigger>
+                                            <PopoverContent className="w-auto p-0">
+                                                <Calendar
+                                                    mode="single"
+                                                    selected={date}
+                                                    onSelect={setDate}
+                                                    defaultMonth={date}
+                                                />
+                                            </PopoverContent>
+                                        </Popover>
                                     </div>
-                                    <div className="relative">
-                                        <label className="block text-xs font-bold text-gray-400 uppercase mb-1">Guests</label>
-                                        <button className="w-full flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-xl font-medium text-gray-800 hover:bg-gray-100 transition-colors">
-                                            <div className="flex items-center gap-3">
-                                                <Users size={18} className="text-orange-500" />
-                                                <span>2 Adults, 0 Children</span>
-                                            </div>
-                                        </button>
-                                    </div>
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <Button variant="outline" className="w-48 justify-between">
+                                                Guests {total}
+                                            </Button>
+                                        </DropdownMenuTrigger>
+
+                                        <DropdownMenuContent
+                                            align="start"
+                                            className="w-64 rounded-xl bg-gray-100 p-4 shadow-md flex flex-col gap-2"
+                                        >
+                                            <span className="flex items-center gap-2">
+                                                <span>Adults</span>
+                                                <button className="bg-gray-800 text-white py-1 px-3 rounded-md hover:bg-gray-900" onClick={() =>
+                                                    adult > 1 && setAdult(adult - 1)}>-</button>
+                                                <p>{adult}</p>
+                                                <button className="bg-gray-800 text-white py-1 px-3 rounded-md hover:bg-gray-900" onClick={() =>
+                                                    adult < 10 && setAdult(adult + 1)}>+</button>
+                                            </span>
+                                            <span className="flex items-center gap-2">
+                                                <span>Children</span>
+                                                <button className="bg-gray-800 text-white py-1 px-3 rounded-md hover:bg-gray-900" onClick={() =>
+                                                    children > 0 && setChildren(children - 1)}>-</button>
+                                                <p>{children}</p>
+                                                <button className="bg-gray-800 text-white py-1 px-3 rounded-md hover:bg-gray-900" onClick={() =>
+                                                    children < 10 && setChildren(children + 1)}>+</button>
+                                            </span>
+
+                                            <button className="mt-4 w-full bg-gray-800 text-white py-2 rounded-lg hover:bg-gray-900">
+                                                APPLY
+                                            </button>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
                                 </div>
 
-                                <button className="w-full bg-orange-600 hover:bg-orange-700 text-white font-black py-4 rounded-2xl transition-all shadow-xl shadow-orange-600/30 active:scale-95 mb-4">
+                                <Link to={`/booking/${tour._id}`} className="w-full bg-orange-600 hover:bg-orange-700 text-white font-black py-4 rounded-2xl transition-all shadow-xl shadow-orange-600/30 active:scale-95 block text-center mb-4">
                                     BOOK NOW
-                                </button>
-                                
+                                </Link>
+
                                 <p className="text-center text-sm text-gray-500 mb-6 italic">Free cancellation up to 48 hours before start</p>
-                                
+
                                 <div className="flex gap-4 pt-6 border-t border-gray-100">
                                     <button className="flex-1 flex items-center justify-center gap-2 text-sm font-bold text-gray-600 hover:bg-gray-50 py-2 rounded-lg transition-colors">
                                         <Share2 size={16} /> Share

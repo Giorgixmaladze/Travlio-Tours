@@ -1,4 +1,4 @@
-    const User = require("../model/user.model.js")
+const User = require("../model/user.model.js")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken")
 
 const signToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_KEY, {
-        expiresIn: process.env.JWT_EXPIRES_IN || "7d",
+        expiresIn: process.env.JWT_EXPIRES_IN || "1h",
     });
 };
 
@@ -46,7 +46,6 @@ const createUser = async (req, res, next) => {
             success: true,
             message: "User created successfully"
         })
-        return createSendToken(user, 200, res)
 
 
     } catch (error) {
@@ -56,7 +55,6 @@ const createUser = async (req, res, next) => {
         next(error)
     }
 }
-
 
 
 const login = async (req, res, next) => {
@@ -138,5 +136,3 @@ const autoLogin = async (req, res, next) => {
 
 
 module.exports = { createUser, login, logOut, getMe, autoLogin }
-
-
