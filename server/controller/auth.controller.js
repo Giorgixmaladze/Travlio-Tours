@@ -117,21 +117,30 @@ const getMe = async (req, res, next) => {
 
 
 const autoLogin = async (req, res, next) => {
+    try {
+        const token = req.cookies.lt;
+        if (!token) {
+            return res.status(401).json({ message: "Not logged in" });
+        }
 
-    const user = await User.findById(req.user._id);
-    console.log(user)
-    if (!user) {
-        return next(new AppError("User not found", 404));
+        const decoded = jwt.verify(token, process.env.JWT_KEY);
+        const user = await User.findById(decoded.id);
+
+        if (!user) {
+            return res.status(401).json({ message: "User not found" });
+        }
+
+        user.password = undefined;
+
+        return res.status(200).json({
+            status: "success",
+            data: {
+                user,
+            },
+        });
+    } catch (error) {
+        return res.status(401).json({ message: "Invalid or expired token" });
     }
-
-    user.password = undefined;
-
-    return res.status(200).json({
-        status: "success",
-        data: {
-            user,
-        },
-    });
 };
 
 

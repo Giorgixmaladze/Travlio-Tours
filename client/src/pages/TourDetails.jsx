@@ -68,7 +68,7 @@ const TourDetails = () => {
             setLoading(false);
         };
         fetchTour();
-    }, [id, getTourById]);
+    }, [id]);
 
     useGSAP(() => {
         if (!loading && tour) {
