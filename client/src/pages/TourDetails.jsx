@@ -54,12 +54,7 @@ const TourDetails = () => {
     const { getTourById } = useContext(ToursContext);
     const [tour, setTour] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [date, setDate] = useState(new Date());
-    const [adult, setAdult] = useState(1);
-
-    const [children, setChildren] = useState(0);
-
-    const total = adult  + children;
+  
 
     useEffect(() => {
         const fetchTour = async () => {
@@ -224,7 +219,7 @@ const TourDetails = () => {
                                     )}
                                 </div>
 
-                                <div className="space-y-4 mb-8">
+                                {/* <div className="space-y-4 mb-8">
                                     <div className="relative">
                                         <label className="block text-xs font-bold text-gray-400 uppercase mb-1">Date</label>
                                         <Popover >
@@ -284,7 +279,7 @@ const TourDetails = () => {
                                             </button>
                                         </DropdownMenuContent>
                                     </DropdownMenu>
-                                </div>
+                                </div> */}
 
                                 <Link to={`/booking/${tour._id}`} className="w-full bg-orange-600 hover:bg-orange-700 text-white font-black py-4 rounded-2xl transition-all shadow-xl shadow-orange-600/30 active:scale-95 block text-center mb-4">
                                     BOOK NOW

@@ -11,7 +11,11 @@ const bookSchema = new mongoose.Schema({
         ref: "Tour",
         required: true
     },
-    date: {
+    startDate: {
+        type: Date,
+        required: true
+    },
+    endDate: {
         type: Date,
         required: true
     },

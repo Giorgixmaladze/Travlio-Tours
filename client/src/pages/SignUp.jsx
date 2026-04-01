@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaEnvelope, FaLock, FaUser, FaGoogle, FaFacebookF } from "react-icons/fa";
+import { FaEnvelope, FaLock, FaUser, FaGoogle, FaFacebookF, FaPhone } from "react-icons/fa";
 import logo from "../assets/logo.png";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
@@ -21,9 +21,12 @@ const SignUp = () => {
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
     const [formData, setFormData] = useState({
-        name: "",
+        firstName: "",
+        lastName: "",
+        userName: "",
         email: "",
         password: "",
+        phone: "",
         role: "",
         location: ""
     })
@@ -92,11 +95,15 @@ const SignUp = () => {
         setLoading(true);
         const formDataObj = new FormData(e.target)
         const data = {
-            name: formDataObj.get("name"),
+            firstName: formDataObj.get("firstName"),
+            lastName: formDataObj.get("lastName"),
+            userName: formDataObj.get("userName"),
             email: formDataObj.get("email"),
             password: formDataObj.get("password"),
+            phone: formDataObj.get("phone"),
             role: formDataObj.get("role"),
-            location: formData.location
+            location: formData.location,
+
         }
         const result = await signup(data)
         setLoading(false);
@@ -156,19 +163,54 @@ const SignUp = () => {
 
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="sign-up-form-item">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
                                 <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 z-10">
                                         <FaUser />
                                     </div>
                                     <Input
                                         type="text"
-                                        name="name"
-                                        value={formData.name}
+                                        name="firstName"
+                                        value={formData.firstName}
                                         onChange={handleChange}
                                         required
                                         className="pl-10 pr-4 py-2.5 h-auto text-base"
-                                        placeholder="John Doe"
+                                        placeholder="John"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="sign-up-form-item">
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 z-10">
+                                        <FaUser />
+                                    </div>
+                                    <Input
+                                        type="text"
+                                        name="lastName"
+                                        value={formData.lastName}
+                                        onChange={handleChange}
+                                        required
+                                        className="pl-10 pr-4 py-2.5 h-auto text-base"
+                                        placeholder="Doe"
+                                    />
+                                </div>
+                            </div>
+                            <div className="sign-up-form-item">
+                                <label className="block text-sm font-medium text-gray-700 mb-1">User Name</label>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 z-10">
+                                        <FaUser />
+                                    </div>
+                                    <Input
+                                        type="text"
+                                        name="userName"
+                                        value={formData.userName}
+                                        onChange={handleChange}
+                                        required
+                                        className="pl-10 pr-4 py-2.5 h-auto text-base"
+                                        placeholder="JohnDoe"
                                     />
                                 </div>
                             </div>
@@ -206,6 +248,24 @@ const SignUp = () => {
                                             required
                                             className="pl-10 pr-4 py-2.5 h-auto text-base"
                                             placeholder="••••••••"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                                    <div className="relative">
+                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 z-10">
+                                            <FaPhone />
+                                        </div>
+                                        <Input
+                                            type="text"
+                                            name="phone"
+                                            value={formData.phone}
+                                            onChange={handleChange}
+                                            required
+                                            className="pl-10 pr-4 py-2.5 h-auto text-base"
+                                            placeholder="+1234567890"
                                         />
                                     </div>
                                 </div>

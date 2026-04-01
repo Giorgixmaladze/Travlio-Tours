@@ -3,22 +3,40 @@ import { useParams, Link } from "react-router-dom";
 import { ToursContext } from "../context/ToursContext";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { 
-    ChevronRight, CreditCard, User, ShieldCheck, 
-    Calendar, Users, MapPin, Star, AlertCircle,
-    Lock, CheckCircle2, ArrowRight
+import {
+    ChevronRight, CreditCard, User, ShieldCheck,
+    Users, MapPin, Star, AlertCircle,
+    Lock, CheckCircle2, ArrowRight, Calendar as CalendarIcon
 } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
+import { format } from "date-fns";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+
+} from "../components/ui/popover"
+import { Calendar } from "../components/ui/calendar"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../components/ui/dropdown-menu"
 
 const Booking = () => {
     const { id } = useParams();
     const { getTourById } = useContext(ToursContext);
     const [tour, setTour] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+    const [adult, setAdult] = useState(1);
+
+    const [children, setChildren] = useState(0);
+
+    const total = adult + children;
+
 
     useEffect(() => {
         const fetchTour = async () => {
@@ -35,6 +53,8 @@ const Booking = () => {
             }
             setLoading(false);
         };
+
+
 
         const setMockTour = () => {
             setTour({
@@ -106,37 +126,107 @@ const Booking = () => {
                     ))}
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                    {/* Left Column: Forms */}
-                    <div className="lg:col-span-2 space-y-8 animate-step">
-                        <section className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div className="lg:col-span-2 space-y-8">
+                        <section className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-100 animate-step">
                             <div className="flex items-center gap-3 mb-6">
                                 <div className="w-10 h-10 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center">
-                                    <User size={20} />
+                                    <CalendarIcon size={20} />
                                 </div>
-                                <h2 className="text-2xl font-bold text-slate-900">Primary Traveler</h2>
+                                <h2 className="text-2xl font-bold text-slate-900">Trip Details</h2>
                             </div>
                             
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <form className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                                 <div className="space-y-2">
-                                    <Label htmlFor="firstName">First Name</Label>
-                                    <Input id="firstName" placeholder="John" className="rounded-xl border-slate-200 h-12" />
+                                    <label className="block text-xs font-bold text-slate-500 uppercase">Departure Date</label>
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                            <Button
+                                                variant="outline"
+                                                className={`w-full h-14 justify-start text-left font-semibold border-slate-200 rounded-xl hover:bg-slate-50 hover:text-slate-900 ${!startDate && "text-slate-400"}`}
+                                            >
+                                                <CalendarIcon className="mr-3 h-5 w-5 text-orange-600" />
+                                                {startDate ? format(startDate, "PPP") : <span>Pick a date</span>}
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-auto p-0" align="start">
+                                            <Calendar
+                                                mode="single"
+                                                selected={startDate}
+                                                onSelect={setStartDate}
+                                                defaultMonth={startDate}
+                                            />
+                                        </PopoverContent>
+                                    </Popover>
                                 </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="lastName">Last Name</Label>
-                                    <Input id="lastName" placeholder="Doe" className="rounded-xl border-slate-200 h-12" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="email">Email Address</Label>
-                                    <Input id="email" type="email" placeholder="john@example.com" className="rounded-xl border-slate-200 h-12" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="phone">Phone Number</Label>
-                                    <Input id="phone" placeholder="+1 (555) 000-0000" className="rounded-xl border-slate-200 h-12" />
-                                </div>
-                            </div>
-                        </section>
 
+                                <div className="space-y-2">
+                                    <label className="block text-xs font-bold text-slate-500 uppercase">Return Date</label>
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                            <Button
+                                                variant="outline"
+                                                className={`w-full h-14 justify-start text-left font-semibold border-slate-200 rounded-xl hover:bg-slate-50 hover:text-slate-900 ${!endDate && "text-slate-400"}`}
+                                            >
+                                                <CalendarIcon className="mr-3 h-5 w-5 text-orange-600" />
+                                                {endDate ? format(endDate, "PPP") : <span>Pick a date</span>}
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-auto p-0" align="start">
+                                            <Calendar
+                                                mode="single"
+                                                selected={endDate}
+                                                onSelect={setEndDate}
+                                                defaultMonth={endDate}
+                                            />
+                                        </PopoverContent>
+                                    </Popover>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="block text-xs font-bold text-slate-500 uppercase">Guests</label>
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <Button variant="outline" className="w-full h-14 justify-start text-left font-semibold border-slate-200 rounded-xl hover:bg-slate-50 hover:text-slate-900">
+                                                <Users className="mr-3 h-5 w-5 text-orange-600" />
+                                                {total} Guest{total !== 1 && 's'}
+                                            </Button>
+                                        </DropdownMenuTrigger>
+
+                                        <DropdownMenuContent
+                                            align="start"
+                                            className="w-[calc(100vw-2rem)] md:w-64 rounded-2xl bg-white p-4 shadow-xl border border-slate-100 flex flex-col gap-4"
+                                            sideOffset={8}
+                                        >
+                                            <div className="flex items-center justify-between">
+                                                <div>
+                                                    <p className="font-bold text-slate-900">Adults</p>
+                                                    <p className="text-xs text-slate-500">Age 13+</p>
+                                                </div>
+                                                <div className="flex items-center gap-3">
+                                                    <button type="button" className="w-8 h-8 rounded-full border border-slate-200 text-slate-600 flex items-center justify-center hover:border-orange-600 hover:text-orange-600 transition-colors" onClick={() => adult > 1 && setAdult(adult - 1)}>-</button>
+                                                    <span className="font-semibold text-slate-900 w-4 text-center">{adult}</span>
+                                                    <button type="button" className="w-8 h-8 rounded-full border border-slate-200 text-slate-600 flex items-center justify-center hover:border-orange-600 hover:text-orange-600 transition-colors" onClick={() => adult < 10 && setAdult(adult + 1)}>+</button>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-center justify-between">
+                                                <div>
+                                                    <p className="font-bold text-slate-900">Children</p>
+                                                    <p className="text-xs text-slate-500">Ages 2-12</p>
+                                                </div>
+                                                <div className="flex items-center gap-3">
+                                                    <button type="button" className="w-8 h-8 rounded-full border border-slate-200 text-slate-600 flex items-center justify-center hover:border-orange-600 hover:text-orange-600 transition-colors" onClick={() => children > 0 && setChildren(children - 1)}>-</button>
+                                                    <span className="font-semibold text-slate-900 w-4 text-center">{children}</span>
+                                                    <button type="button" className="w-8 h-8 rounded-full border border-slate-200 text-slate-600 flex items-center justify-center hover:border-orange-600 hover:text-orange-600 transition-colors" onClick={() => children < 10 && setChildren(children + 1)}>+</button>
+                                                </div>
+                                            </div>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                </div>
+                            </form>
+                        </section>
                         <section className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 animate-step">
                             <div className="flex items-center justify-between mb-6">
                                 <div className="flex items-center gap-3">
@@ -198,9 +288,9 @@ const Booking = () => {
                         <div className="sticky top-24 space-y-6 animate-sidebar">
                             <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
                                 <div className="relative h-48 overflow-hidden">
-                                    <img 
-                                        src={tour.image?.url} 
-                                        alt={tour.title} 
+                                    <img
+                                        src={tour.image?.url}
+                                        alt={tour.title}
                                         className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                                     />
                                     <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-orange-600 uppercase">
@@ -226,24 +316,23 @@ const Booking = () => {
                                     <div className="space-y-3 py-6 border-y border-slate-100">
                                         <div className="flex items-center justify-between text-sm">
                                             <div className="flex items-center gap-2 text-slate-500">
-                                                <Calendar size={16} />
                                                 <span>Date</span>
                                             </div>
-                                            <span className="font-semibold text-slate-900">Oct 12 - Oct 19, 2026</span>
+                                            <span className="font-semibold text-slate-900">{(format(startDate, "PPP").split(" ")[0].slice(0, 3)) + " " + (format(startDate, "PPP").split(" ")[1])} - {(format(endDate, "PPP").split(" ")[0].slice(0, 3)) + " " + (format(endDate, "PPP").split(" ")[1])}</span>
                                         </div>
                                         <div className="flex items-center justify-between text-sm">
                                             <div className="flex items-center gap-2 text-slate-500">
                                                 <Users size={16} />
                                                 <span>Guests</span>
                                             </div>
-                                            <span className="font-semibold text-slate-900">2 Adults</span>
+                                            <span className="font-semibold text-slate-900">{total} Guests</span>
                                         </div>
                                     </div>
 
                                     <div className="space-y-4">
                                         <div className="flex justify-between text-slate-600 text-sm">
                                             <span>Base Price</span>
-                                            <span>${tour.price?.current} x 2</span>
+                                            <span>${tour.price?.current} x {total}</span>
                                         </div>
                                         <div className="flex justify-between text-slate-600 text-sm">
                                             <span>Service Fee</span>
@@ -251,7 +340,7 @@ const Booking = () => {
                                         </div>
                                         <div className="flex justify-between items-center pt-4 border-t border-slate-100">
                                             <span className="text-lg font-bold text-slate-900">Total</span>
-                                            <span className="text-2xl font-black text-orange-600">${tour.price?.current * 2 + 45}</span>
+                                            <span className="text-2xl font-black text-orange-600">${tour.price?.current * total + 45}</span>
                                         </div>
                                     </div>
 

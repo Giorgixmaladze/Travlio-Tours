@@ -51,7 +51,7 @@ const Profile = () => {
                     </div>
 
                     <div className="flex-1 text-center sm:text-left">
-                        <h1 className="text-3xl font-bold text-gray-900 mb-2">{userData.name}</h1>
+                        <h1 className="text-3xl font-bold text-gray-900 mb-2">{userData.userName}</h1>
                         <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-6 text-gray-600">
                             <span className="flex items-center gap-1.5 bg-orange-50 text-orange-600 px-3 py-1 rounded-full text-sm font-medium">
                                 {userData.role}
