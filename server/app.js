@@ -11,6 +11,7 @@ const staffRouter = require("./router/staff.router")
 const authRouter = require("./router/auth.router")
 const path = require("path")
 const cookieParser = require("cookie-parser")
+const bookingsRouter = require("./router/book.router")
 app.use(cors({
     origin: "http://localhost:5173",
     credentials: true
@@ -21,6 +22,7 @@ app.use("/api/tours", toursRouter)
 app.use("/api/reviews", reviewsRouter)
 app.use("/api/staff", staffRouter)
 app.use("/api/auth", authRouter)
+app.use("/api/bookings", bookingsRouter)
 
 dns.setServers(["8.8.8.8", "8.8.4.4"])
 // app.use(express.static(path.join(__dirname, "dist")))

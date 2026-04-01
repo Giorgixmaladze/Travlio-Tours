@@ -31,6 +31,13 @@ const bookSchema = new mongoose.Schema({
         type: String,
         enum: ["pending", "confirmed", "cancelled"],
         default: "pending"
+    },
+    paymentMethod: {
+        type: String,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
     
 })

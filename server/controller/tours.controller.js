@@ -20,13 +20,14 @@ const getPopularTours = async (req, res) => {
     }
 }
 
-const getTour = async (req, res) => {
+const getTour = async (req, res,next) => {
     try {
         const tour = await Tour.findById(req.params.id)
         if (!tour) {
             return res.status(404).json({ message: "Tour not found" })
         }
-        res.status(200).json(tour)
+        req.tour = tour
+        next()
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
