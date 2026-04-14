@@ -34,12 +34,13 @@ const bookSchema = new mongoose.Schema({
     },
     paymentMethod: {
         type: String,
+        default: "cash"
     },
     createdAt: {
         type: Date,
         default: Date.now
     }
-    
 })
 
-module.exports = mongoose.model("Book", bookSchema)
+const Book = mongoose.model("Book", bookSchema)
+module.exports = Book

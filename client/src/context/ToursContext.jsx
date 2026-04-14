@@ -31,6 +31,7 @@ const ToursProvider = ({ children }) => {
 
     const getTourById = useCallback(async (id) => {
         setLoading(true)
+
         try {
             const data = await fetchData(`${import.meta.env.VITE_API_URL}/api/tours/${id}`)
             return data

@@ -26,6 +26,10 @@ const tourSchema = new mongoose.Schema({
     features: {
         type: Array,
 
+    },
+    bookings: {
+        type: Array,
+        ref: "Book"
     }
 })
 

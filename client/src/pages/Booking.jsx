@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { ToursContext } from "../context/ToursContext";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -13,7 +13,7 @@ import gsap from "gsap";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
-import { format } from "date-fns";
+import { format, addDays } from "date-fns";
 import {
     Popover,
     PopoverContent,
@@ -22,9 +22,10 @@ import {
 } from "../components/ui/popover"
 import { Calendar } from "../components/ui/calendar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../components/ui/dropdown-menu"
-
+import { BookContext } from "../context/BookContext"
 const Booking = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const { getTourById } = useContext(ToursContext);
     const [tour, setTour] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -32,10 +33,41 @@ const Booking = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [adult, setAdult] = useState(1);
-
+    const {createBooking} = useContext(BookContext)
     const [children, setChildren] = useState(0);
-
     const total = adult + children;
+
+    const handleSubmit = async () => {
+        const bookingData = {
+            startDate,
+            endDate,
+            totalPrice: tour?.price?.current * total,
+            totalGuests: total,
+            paymentMethod: "cash"
+        };
+        
+        try {
+            const res = await createBooking(bookingData, id);
+            if (res.success) {
+                navigate("/confirmation");
+            } else {
+                alert(res.message || "Booking failed");
+            }
+        } catch (error) {
+            console.error("Booking error:", error);
+            alert("An error occurred during booking");
+        }
+    }
+
+
+    useEffect(() => {
+        if (startDate && tour?.duration) {
+            const days = parseInt(tour.duration);
+            if (!isNaN(days) && days > 0) {
+                setEndDate(addDays(startDate, days));
+            }
+        }
+    }, [startDate, tour]);
 
 
     useEffect(() => {
@@ -156,6 +188,7 @@ const Booking = () => {
                                                 selected={startDate}
                                                 onSelect={setStartDate}
                                                 defaultMonth={startDate}
+                                                disabled={date => date < new Date()}
                                             />
                                         </PopoverContent>
                                     </Popover>
@@ -179,6 +212,7 @@ const Booking = () => {
                                                 selected={endDate}
                                                 onSelect={setEndDate}
                                                 defaultMonth={endDate}
+                                                disabled={date => date < new Date()}
                                             />
                                         </PopoverContent>
                                     </Popover>
@@ -321,6 +355,10 @@ const Booking = () => {
                                             <span className="font-semibold text-slate-900">{(format(startDate, "PPP").split(" ")[0].slice(0, 3)) + " " + (format(startDate, "PPP").split(" ")[1])} - {(format(endDate, "PPP").split(" ")[0].slice(0, 3)) + " " + (format(endDate, "PPP").split(" ")[1])}</span>
                                         </div>
                                         <div className="flex items-center justify-between text-sm">
+                                            <span className="text-slate-500">Duration</span>
+                                            <span className="font-semibold text-slate-900">{tour.duration}</span>
+                                        </div>
+                                        <div className="flex items-center justify-between text-sm">
                                             <div className="flex items-center gap-2 text-slate-500">
                                                 <Users size={16} />
                                                 <span>Guests</span>
@@ -344,7 +382,7 @@ const Booking = () => {
                                         </div>
                                     </div>
 
-                                    <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white h-14 rounded-2xl text-lg font-bold shadow-lg shadow-orange-600/20 group">
+                                    <Button onClick={handleSubmit} className="w-full bg-orange-600 hover:bg-orange-700 text-white h-14 rounded-2xl text-lg font-bold shadow-lg shadow-orange-600/20 group">
                                         COMPLETE BOOKING
                                         <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={20} />
                                     </Button>

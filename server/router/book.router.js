@@ -1,7 +1,9 @@
 const express = require("express")
 const router = express.Router()
-const { createBooking } = require("../controller/bookings.controller")
+const { createBooking, getUserBookings } = require("../controller/bookings.controller")
 const { getTour } = require("../controller/tours.controller")
+const { protect } = require("../controller/auth.controller")
 
-router.post("/:id",getTour,createBooking)
+router.post("/create/:id", protect, getTour, createBooking)
+router.get("/my-bookings", protect, getUserBookings)
 module.exports = router

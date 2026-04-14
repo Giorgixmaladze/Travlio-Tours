@@ -5,7 +5,7 @@ const fetchData = async (url,method = "GET",body = null,headers = {
         const response = await fetch(url,{
             method:method,
             headers:headers,
-            body:body ? JSON.stringify(body) : undefined
+            body:body ? JSON.parse(body) : undefined
         })
         const data = await response.json()
         return data

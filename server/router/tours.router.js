@@ -4,6 +4,8 @@ const { getAllTours, getPopularTours, getTour } = require("../controller/tours.c
 
 toursRouter.get("/", getAllTours)
 toursRouter.get("/popular", getPopularTours)
-toursRouter.get("/:id", getTour)
+toursRouter.get("/:id", getTour, (req, res) => {
+    res.status(200).json(req.tour)
+})
 
 module.exports = toursRouter

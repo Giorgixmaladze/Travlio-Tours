@@ -65,6 +65,8 @@ const TourDetails = () => {
         fetchTour();
     }, [id]);
 
+    
+
     useGSAP(() => {
         if (!loading && tour) {
             const tl = gsap.timeline();
