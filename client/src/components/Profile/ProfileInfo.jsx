@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Camera, MapPin, Calendar, Edit2 } from 'lucide-react'
+import ProfileEdit from './ProfileEdit'
 
 const ProfileInfo = ({ userData }) => {
+    const [isEditOpen, setIsEditOpen] = useState(false);
+
     return (
         <>
             {/* Header / Cover */}
@@ -36,27 +39,36 @@ const ProfileInfo = ({ userData }) => {
                         <h1 className="text-3xl font-bold text-gray-900 mb-2">{userData?.userName}</h1>
                         <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-6 text-gray-600">
                             <span className="flex items-center gap-1.5 bg-orange-50 text-orange-600 px-3 py-1 rounded-full text-sm font-medium">
-                                {userData?.role}
+                                {userData?.role || 'Traveler'}
                             </span>
                             <span className="flex items-center gap-1.5 text-sm">
                                 <MapPin size={16} className="text-gray-400" />
-                                {userData?.location}
+                                {userData?.location || 'Unknown'}
                             </span>
                             <span className="flex items-center gap-1.5 text-sm">
                                 <Calendar size={16} className="text-gray-400" />
-                                {userData?.joinDate}
+                                Joined {userData?.joinDate || 'Recently'}
                             </span>
                         </div>
                     </div>
 
                     <div className="flex gap-3 w-full sm:w-auto mt-4 sm:mt-0">
-                        <button className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-gray-50 hover:bg-gray-100 text-gray-700 px-6 py-2.5 rounded-xl font-medium transition-colors border border-gray-200">
+                        <button 
+                            onClick={() => setIsEditOpen(true)}
+                            className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-gray-50 hover:bg-gray-100 text-gray-700 px-6 py-2.5 rounded-xl font-medium transition-colors border border-gray-200"
+                        >
                             <Edit2 size={18} />
                             Edit Profile
                         </button>
                     </div>
                 </div>
             </div>
+
+            <ProfileEdit 
+                isOpen={isEditOpen} 
+                onClose={() => setIsEditOpen(false)} 
+                userData={userData} 
+            />
         </>
     )
 }

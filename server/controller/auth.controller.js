@@ -143,6 +143,36 @@ const autoLogin = async (req, res, next) => {
     }
 };
 
+
+
+const updateProfile = async (req, res, next) =>{
+    try {
+
+        const allowedUpdates = ['userName', 'location', 'phone'];
+        const updateData = {};
+        for (const key of Object.keys(req.body)) {
+            if (allowedUpdates.includes(key)) {
+                updateData[key] = req.body[key];
+            }
+        }
+
+        const user = await User.findOneAndUpdate(
+            { _id: req.user.id }, 
+            updateData, 
+            { new: true, runValidators: true }
+        );
+
+        res.status(200).json({
+            status: "success",
+            data: {
+                user,
+            },
+        });
+    } catch (error) {
+        next(error)
+    }
+}
+
 const protect = async (req, res, next) => {
     try {
         const token = req.cookies.lt;
@@ -165,4 +195,4 @@ const protect = async (req, res, next) => {
 };
 
 
-module.exports = { createUser, login, logOut, getMe, autoLogin, protect }
+module.exports = { createUser, login, logOut, getMe, autoLogin, protect,updateProfile}

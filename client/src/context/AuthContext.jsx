@@ -107,6 +107,34 @@ const AuthProvider = ({ children }) => {
         }
     }
 
+
+    const updateProfile = async (userData) =>{
+        try{
+            const res = await fetch(`http://localhost:3000/api/auth/update-profile`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify(userData)
+            })
+            if(res.ok){
+                const data = await res.json()
+                if(data.status === "success" && data.data.user){
+                    setUser(data.data.user)
+                    console.log("Profile updated successfully:", data.data.user)
+                }
+            }
+            return { success: res.ok };
+        }catch(error){
+            console.log(error)
+            return {
+                success: false,
+                message: error.message || "An error occurred during profile update"
+            };
+        }
+    }
+
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -116,7 +144,7 @@ const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ signup, login, user, logout }}>
+        <AuthContext.Provider value={{ signup, login, user, logout, updateProfile }}>
             {children}
         </AuthContext.Provider>
     )
