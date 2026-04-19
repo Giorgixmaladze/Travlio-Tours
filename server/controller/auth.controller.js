@@ -37,15 +37,17 @@ const createUser = async (req, res, next) => {
     try {
         const user = await User.create(req.body)
 
-        return createSendToken(user, 201, res)
+        await user.save({ validateBeforeSave: false })
+
+        res.status(200).json({
+            success: true,
+            message: "User created successfully. Please check your email to verify your account."
+        })
+        return createSendToken(user, 200, res)
 
     } catch (error) {
         if (error.code === 11000) {
-            const field = Object.keys(error.keyValue)[0];
-            return res.status(400).json({ 
-                success: false,
-                message: `${field === 'email' ? 'Email' : 'User Name'} is already taken. Please use another one.` 
-            });
+            return res.status(400).json({ message: "Duplicate user detected" });
         }
         next(error)
     }
@@ -140,7 +142,7 @@ const autoLogin = async (req, res, next) => {
     }
 };
 
-const updateProfile = async (req, res, next) =>{
+const updateProfile = async (req, res, next) => {
     try {
 
         const allowedUpdates = ['userName', 'location', 'phone'];
@@ -152,8 +154,8 @@ const updateProfile = async (req, res, next) =>{
         }
 
         const user = await User.findOneAndUpdate(
-            { _id: req.user.id }, 
-            updateData, 
+            { _id: req.user.id },
+            updateData,
             { new: true, runValidators: true }
         );
 
