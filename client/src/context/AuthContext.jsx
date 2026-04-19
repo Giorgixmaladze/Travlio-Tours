@@ -73,7 +73,7 @@ const AuthProvider = ({ children }) => {
             })
             setUser(null)
             navigate("/signin")
-            return { success: true, data: res.data };
+            return { success: true };
         } catch (error) {
             console.log(error)
             return {
