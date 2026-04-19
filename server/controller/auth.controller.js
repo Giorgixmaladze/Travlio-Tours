@@ -113,24 +113,7 @@ const getMe = async (req, res, next) => {
     }
 }
 
-const verifyEmail = async (req, res, next) => {
-    try {
-        const { code } = req.params;
 
-        const user = await User.findOne({ verificationCode: code });
-        if (!user) {
-            return res.status(400).json({ message: "Invalid or expired verification code" });
-        }
-
-        user.isVerified = true;
-        user.verificationCode = undefined;
-        await user.save({ validateBeforeSave: false });
-
-        res.redirect(`https://travlio-tours.onrender.com/verify-success`);
-    } catch (error) {
-        next(error);
-    }
-}
 
 const autoLogin = async (req, res, next) => {
     try {
@@ -208,4 +191,4 @@ const protect = async (req, res, next) => {
     }
 };
 
-module.exports = { createUser, login, logOut, getMe, autoLogin, protect, updateProfile, verifyEmail }
+module.exports = { createUser, login, logOut, getMe, autoLogin, protect, updateProfile }
