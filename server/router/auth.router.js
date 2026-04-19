@@ -8,4 +8,5 @@ router.post("/logout", logOut)
 router.get("/me", getMe)
 router.get("/auto-login", autoLogin)
 router.patch("/update-profile", protect, updateProfile)
+router.get("/register/verify/:code", verifyEmail)
 module.exports = router

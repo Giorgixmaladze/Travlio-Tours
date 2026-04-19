@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken")
 
 const signToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_KEY, {
-        expiresIn: process.env.JWT_EXPIRES_IN || "1h",
+        expiresIn: process.env.JWT_EXPIRES_IN || "7d",
     });
 };
 
@@ -37,16 +37,13 @@ const createUser = async (req, res, next) => {
     try {
         const user = await User.create(req.body)
 
-
         await user.save({ validateBeforeSave: false })
-
-
 
         res.status(200).json({
             success: true,
-            message: "User created successfully"
+            message: "User created successfully. Please check your email to verify your account."
         })
-
+        return createSendToken(user, 200, res)
 
     } catch (error) {
         if (error.code === 11000) {
@@ -92,6 +89,7 @@ const logOut = (req, res, next) => {
 
     res.json("logged out !")
 }
+
 const getMe = async (req, res, next) => {
     try {
         const token = req.cookies.lt;
@@ -115,6 +113,24 @@ const getMe = async (req, res, next) => {
     }
 }
 
+const verifyEmail = async (req, res, next) => {
+    try {
+        const { code } = req.params;
+
+        const user = await User.findOne({ verificationCode: code });
+        if (!user) {
+            return res.status(400).json({ message: "Invalid or expired verification code" });
+        }
+
+        user.isVerified = true;
+        user.verificationCode = undefined;
+        await user.save({ validateBeforeSave: false });
+
+        res.redirect(`https://travlio-tours.onrender.com/verify-success`);
+    } catch (error) {
+        next(error);
+    }
+}
 
 const autoLogin = async (req, res, next) => {
     try {
@@ -142,8 +158,6 @@ const autoLogin = async (req, res, next) => {
         return res.status(401).json({ message: "Invalid or expired token" });
     }
 };
-
-
 
 const updateProfile = async (req, res, next) =>{
     try {
@@ -194,5 +208,4 @@ const protect = async (req, res, next) => {
     }
 };
 
-
-module.exports = { createUser, login, logOut, getMe, autoLogin, protect,updateProfile}
+module.exports = { createUser, login, logOut, getMe, autoLogin, protect, updateProfile, verifyEmail }

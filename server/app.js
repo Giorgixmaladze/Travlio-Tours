@@ -14,8 +14,19 @@ const cookieParser = require("cookie-parser")
 const router = require("./router/book.router")
 const BlogRouter = require("./router/blog.router")
 
+const allowedOrigins = [
+    "https://travlio-tours.onrender.com",
+    "http://localhost:5173" // Add localhost for development
+]
+
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    },
     credentials: true
 }))
 app.use(express.json())
@@ -28,10 +39,10 @@ app.use("/api/book", router)
 app.use("/api/blogs", BlogRouter)
 
 dns.setServers(["8.8.8.8", "8.8.4.4"])
-// app.use(express.static(path.join(__dirname, "dist")))
-// app.get(/.*/, (req, res) => {
-//     res.sendFile(path.join(__dirname, "dist", "index.html"));
-// });
+app.use(express.static(path.join(__dirname, "dist")))
+app.get(/.*/, (req, res) => {
+    res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
