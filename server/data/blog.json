@@ -1,0 +1,56 @@
+[
+    {
+        "id": 1,
+        "image": "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80",
+        "category": "Adventure",
+        "title": "Top 10 Hidden Gems in Southeast Asia",
+        "excerpt": "Discover the secret beaches, ancient temples, and vibrant street markets that most travelers never find.",
+        "author": "Sarah Jenkins",
+        "date": "Jan 15, 2025"
+    },
+    {
+        "id": 2,
+        "image": "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=600&q=80",
+        "category": "Destinations",
+        "title": "Why Venice Is Still Worth Visiting in 2025",
+        "excerpt": "Despite the crowds, the city of water remains one of Europe's most breathtaking and romantic destinations.",
+        "author": "Marcus Thorne",
+        "date": "Feb 3, 2025"
+    },
+    {
+        "id": 3,
+        "image": "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600&q=80",
+        "category": "Food & Travel",
+        "title": "A Culinary Journey Through Morocco",
+        "excerpt": "From tagines to couscous, explore how Moroccan cuisine tells the story of a thousand-year-old culture.",
+        "author": "Leo Kim",
+        "date": "Feb 18, 2025"
+    },
+    {
+        "id": 4,
+        "image": "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=600&q=80",
+        "category": "Tips",
+        "title": "How to Pack Like a Pro for a 2-Week Trip",
+        "excerpt": "Our expert packing guide will help you travel lighter, smarter, and with zero regrets at the airport.",
+        "author": "Elena Rodriguez",
+        "date": "Feb 22, 2025"
+    },
+    {
+        "id": 5,
+        "image": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&q=80",
+        "category": "Lifestyle",
+        "title": "Slow Travel: The Art of Going Nowhere Fast",
+        "excerpt": "What happens when you stop rushing between cities and actually stay long enough to build real connections?",
+        "author": "Sarah Jenkins",
+        "date": "Mar 1, 2025"
+    },
+    {
+        "id": 6,
+        "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80",
+        "category": "Destinations",
+        "title": "The Maldives on a Budget: Is it Possible?",
+        "excerpt": "Yes, you can visit one of the world's most luxurious destinations without breaking the bank. Here's how.",
+        "author": "Marcus Thorne",
+        "date": "Mar 8, 2025"
+    }
+]

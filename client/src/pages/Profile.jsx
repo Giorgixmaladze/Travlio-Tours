@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react'
-import { Calendar, Heart, Settings, Briefcase } from 'lucide-react'
+import { Calendar, Heart, Settings, Briefcase, PenLine } from 'lucide-react'
 import { AuthContext } from '../context/AuthContext'
 import { BookContext } from '../context/BookContext'
 import { useNavigate } from 'react-router-dom'
@@ -9,6 +9,7 @@ import ProfileSidebar from '../components/Profile/ProfileSidebar'
 import OverviewTab from '../components/Profile/ProfileTabs/OverviewTab'
 import BookingsTab from '../components/Profile/ProfileTabs/BookingsTab'
 import SettingsTab from '../components/Profile/ProfileTabs/SettingsTab'
+import MyBlogsTab from '../components/Profile/ProfileTabs/MyBlogsTab'
 
 const Profile = () => {
     const { user, logout } = useContext(AuthContext)
@@ -42,6 +43,7 @@ const Profile = () => {
     const tabs = [
         { id: 'overview', label: 'Overview', icon: Briefcase },
         { id: 'bookings', label: 'My Bookings', icon: Calendar },
+        { id: 'blogs', label: 'My Blogs', icon: PenLine },
         { id: 'settings', label: 'Settings', icon: Settings }
     ]
 
@@ -69,6 +71,7 @@ const Profile = () => {
                                     navigate={navigate} 
                                 />
                             )}
+                            {activeTab === 'blogs' && <MyBlogsTab userData={userData} />}
                             {activeTab === 'settings' && <SettingsTab />}
                         </div>
                     </div>

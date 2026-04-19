@@ -1,11 +1,14 @@
 import Header from "../components/Header"
 import Footer from "../components/Footer"
-import { posts, BlogCard } from "../components/Blog/BlogSections"
+import {  BlogCard } from "../components/Blog/BlogSections"
+import AddBlogModal from "../components/Blog/AddBlogModal"
 import { Link } from "react-router-dom"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
-import { useRef } from "react"
-
+import { useRef, useState } from "react"
+import { PenLine } from "lucide-react"
+import {useContext} from "react"
+import {BlogContext} from "../context/BlogContext"
 const BlogHero = () => (
     <div
         className="relative w-full h-64 md:h-80 bg-cover bg-center flex items-center justify-center blog-hero"
@@ -27,6 +30,8 @@ const BlogHero = () => (
 
 const Blog = () => {
     const containerRef = useRef(null)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const {blogs,loading,error,addBlog,getAllBlogs} = useContext(BlogContext)
 
     useGSAP(() => {
         const tl = gsap.timeline()
@@ -79,8 +84,8 @@ const Blog = () => {
 
                     {/* Blog cards grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {posts.map((post) => (
-                            <div key={post.id} className="blog-card">
+                        {blogs.map((post) => (
+                            <div key={post._id || post.id} className="blog-card">
                                 <BlogCard post={post} />
                             </div>
                         ))}
@@ -88,6 +93,21 @@ const Blog = () => {
                 </div>
             </main>
             <Footer />
+
+            {/* Floating Write Button */}
+            <button
+                onClick={() => setIsModalOpen(true)}
+                className="fixed bottom-8 right-8 z-40 flex items-center gap-2.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-5 py-3.5 rounded-2xl shadow-xl shadow-orange-500/40 hover:shadow-orange-600/50 hover:-translate-y-1 transition-all duration-200"
+            >
+                <PenLine size={20} />
+                Write a Post
+            </button>
+
+            {/* Add Blog Modal */}
+            <AddBlogModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
         </div>
     )
 }

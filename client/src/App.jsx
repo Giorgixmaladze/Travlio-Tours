@@ -20,6 +20,8 @@ import TourDetails from './pages/TourDetails'
 import Booking from './pages/Booking'
 import Confirmation from './pages/Confirmation'
 import BookProvider from './context/BookContext'
+import BlogProvider from './context/BlogContext'
+import BlogDetails from './pages/BlogDetails'
 
 function App() {
 
@@ -30,6 +32,7 @@ function App() {
           <StaffContextProvider>
             <AuthProvider>
               <BookProvider>
+                <BlogProvider>
               <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/tours' element={<Tours />} />
@@ -37,12 +40,14 @@ function App() {
                 <Route path='/about' element={<About />} />
                 <Route path='/contact' element={<Contact />} />
                 <Route path='/blog' element={<Blog />} />
+                <Route path='/blog/:id' element={<BlogDetails />} />
                 <Route path='/signin' element={<SignIn />} />
                 <Route path='/signup' element={<SignUp />} />
                 <Route path='/profile' element={<Profile />} />
                 <Route path='/booking/:id' element={<Booking />} />
                 <Route path='/confirmation' element={<Confirmation />} />
               </Routes>
+                </BlogProvider>
               </BookProvider>
             </AuthProvider>
           </StaffContextProvider>
