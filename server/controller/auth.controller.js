@@ -37,13 +37,7 @@ const createUser = async (req, res, next) => {
     try {
         const user = await User.create(req.body)
 
-        await user.save({ validateBeforeSave: false })
-
-        res.status(200).json({
-            success: true,
-            message: "User created successfully. Please check your email to verify your account."
-        })
-        return createSendToken(user, 200, res)
+        return createSendToken(user, 201, res)
 
     } catch (error) {
         if (error.code === 11000) {
