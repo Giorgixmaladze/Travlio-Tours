@@ -11,7 +11,7 @@ const BlogProvider = ({ children }) => {
     const getAllBlogs = async () => {
         try {
             setLoading(true)
-            const res = await fetch("http://localhost:3000/api/blogs/get-blogs")
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/blogs/get-blogs`)
             const data = await res.json()
             if (data.success) {
                 setBlogs(data.data)
@@ -30,7 +30,7 @@ const BlogProvider = ({ children }) => {
     const fetchBlogById = async (id) => {
         try {
             setLoading(true)
-            const res = await fetch(`http://localhost:3000/api/blogs/get-blog/${id}`)
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/blogs/get-blog/${id}`)
             const data = await res.json()
             if (data.success) {
                 setBlog(data.data)
@@ -45,7 +45,7 @@ const BlogProvider = ({ children }) => {
     }
     const addBlog = async (blogData) => {
         try {
-            const res = await fetch("http://localhost:3000/api/blogs/post-blog", {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/blogs/post-blog`, {
                 method: "POST",
                 // Do NOT set Content-Type — the browser sets it automatically
                 // with the correct multipart/form-data boundary for FormData
@@ -68,7 +68,7 @@ const BlogProvider = ({ children }) => {
 
     const getBlogByUser = async () =>{
         try {
-            const res = await fetch("http://localhost:3000/api/blogs/my-blogs", {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/blogs/my-blogs`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
