@@ -12,17 +12,24 @@ const AddBlogModal = ({ isOpen, onClose }) => {
     const [formData, setFormData] = useState({
         title: '',
         content: '',
-        image: '',
+        image: null,
         category: '',
         author: user?.userName || ''
     })
+    const [imagePreview, setImagePreview] = useState(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
 
     if (!isOpen) return null
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value })
+        if (e.target.type === 'file') {
+            const file = e.target.files[0]
+            setFormData({ ...formData, image: file })
+            setImagePreview(file ? URL.createObjectURL(file) : null)
+        } else {
+            setFormData({ ...formData, [e.target.name]: e.target.value })
+        }
         if (error) setError('')
     }
 
@@ -32,11 +39,24 @@ const AddBlogModal = ({ isOpen, onClose }) => {
             setError('Title and content are required.')
             return
         }
+        if (!formData.image) {
+            setError('Please select a cover image.')
+            return
+        }
         setLoading(true)
         try {
-            const result = await addBlog(formData)
+            // Build multipart/form-data so multer can read the file
+            const data = new FormData()
+            data.append('title', formData.title)
+            data.append('content', formData.content)
+            data.append('category', formData.category)
+            data.append('author', formData.author)
+            data.append('image', formData.image)
+
+            const result = await addBlog(data)
             if (result?.success) {
-                setFormData({ title: '', content: '', image: '', category: '', author: user?.userName || '' })
+                setFormData({ title: '', content: '', image: null, category: '', author: user?.userName || '' })
+                setImagePreview(null)
                 onClose()
             } else {
                 setError(result?.message || 'Something went wrong.')
@@ -143,20 +163,17 @@ const AddBlogModal = ({ isOpen, onClose }) => {
                         </label>
                         <div className="flex flex-col gap-3">
                             <input
-                                type="url"
+                                type="file"
                                 name="image"
-                                value={formData.image}
                                 onChange={handleChange}
-                                placeholder="https://example.com/image.jpg"
                                 className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 outline-none transition-all duration-200 text-gray-800 placeholder:text-gray-400"
                             />
-                            {formData.image && (
+                            {imagePreview && (
                                 <div className="w-full h-36 rounded-xl overflow-hidden border border-gray-200 bg-gray-100">
                                     <img
-                                        src={formData.image}
+                                        src={imagePreview}
                                         alt="Preview"
                                         className="w-full h-full object-cover"
-                                        onError={(e) => { e.target.style.display = 'none' }}
                                     />
                                 </div>
                             )}

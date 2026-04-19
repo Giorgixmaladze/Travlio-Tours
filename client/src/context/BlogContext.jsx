@@ -47,11 +47,10 @@ const BlogProvider = ({ children }) => {
         try {
             const res = await fetch("http://localhost:3000/api/blogs/post-blog", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                // Do NOT set Content-Type — the browser sets it automatically
+                // with the correct multipart/form-data boundary for FormData
                 credentials: "include",
-                body: JSON.stringify(blogData)
+                body: blogData  // blogData is already a FormData object
             })
             const data = await res.json()
             if (data.success) {
@@ -80,10 +79,12 @@ const BlogProvider = ({ children }) => {
             if (data.success) {
                 setBlogs(data.data)
             }
-        } catch (error) {
+        } catch (error) {   
             console.log(error)
         }
     }
+
+
 
     return (
         <BlogContext.Provider value={{ blogs, loading, error, addBlog, getAllBlogs, fetchBlogById,blog,getBlogByUser }}>
