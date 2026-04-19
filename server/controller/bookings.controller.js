@@ -16,7 +16,7 @@ const createBooking = async (req,res,next) => {
             paymentMethod
         })
         await booking.save()
-        res.status(201).json({ success: true, message: "Booking created successfully" })
+        res.status(201).json({ success: true, message: "Booking created successfully", data: booking })
     } catch (error) {
         res.status(500).json({ message: error.message })
     }

@@ -1,9 +1,10 @@
-import { createContext } from "react"
+import { createContext, useState } from "react"
 
 export const BookContext = createContext()
 
 const BookProvider = ({children}) => {
-    const createBooking = async (booking,id) => {
+    const [bookingData, setBookingData] = useState({})
+    const createBooking = async (booking,id) => {``
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/book/create/${id}`,{
             method:"POST",
             headers:{
@@ -28,7 +29,7 @@ const BookProvider = ({children}) => {
         return data
     }
     return (
-        <BookContext.Provider value={{createBooking, getUserBookings}}>
+        <BookContext.Provider value={{createBooking, getUserBookings, bookingData, setBookingData}}>
             {children}
         </BookContext.Provider>
     )

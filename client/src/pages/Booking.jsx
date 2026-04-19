@@ -26,29 +26,39 @@ const Booking = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [adult, setAdult] = useState(1);
-    const {createBooking} = useContext(BookContext)
+    const {createBooking,bookingData,setBookingData} = useContext(BookContext)
     const [children, setChildren] = useState(0);
     const total = adult + children;
 
+
     const handleSubmit = async () => {
-        const bookingData = {
+        // Build the data object once as a local variable.
+        // setBookingData is async — it won't update bookingData in time for createBooking
+        const data = {
+            tourName: tour?.title, 
             startDate,
             endDate,
             totalPrice: tour?.price?.current * total,
             totalGuests: total,
             paymentMethod: "cash"
-        };
-        
+        }
+
+        // Share with context so Confirmation page can read it
+        setBookingData(data)
+
         try {
-            const res = await createBooking(bookingData, id);
+            // Pass `data` directly — not the stale `bookingData` state
+            const res = await createBooking(data, id)
             if (res.success) {
-                navigate("/confirmation");
+                // Update bookingData with the real ID from the server
+                setBookingData({ ...data, id: res.data?._id })
+                navigate("/confirmation")
             } else {
-                alert(res.message || "Booking failed");
+                alert(res.message || "Booking failed")
             }
         } catch (error) {
-            console.error("Booking error:", error);
-            alert("An error occurred during booking");
+            console.error("Booking error:", error)
+            alert("An error occurred during booking")
         }
     }
 

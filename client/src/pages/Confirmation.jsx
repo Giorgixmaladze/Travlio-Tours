@@ -7,8 +7,11 @@ import { Button } from '../components/ui/button';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import ConfirmationTicket from '../components/Confirmation/ConfirmationTicket';
+import { useContext } from 'react';
+import { BookContext } from '../context/BookContext';
 
 const Confirmation = () => {
+    const {bookingData} = useContext(BookContext)
     
     useGSAP(() => {
         const tl = gsap.timeline();
@@ -41,15 +44,7 @@ const Confirmation = () => {
     }, []);
 
     // Mock Booking Data for UI Purposes
-    const mockBooking = {
-        id: "TRV-9824-A7",
-        tourName: "Alpine Adventure: Swiss Peaks",
-        date: "Apr 17, 2026 - Apr 27, 2026",
-        guests: "2 Adults, 1 Child",
-        totalPaid: "$4,136.00",
-        paymentMethod: "Visa ending in 4242"
-    };
-
+  
     return (
         <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
             <Header />
@@ -116,7 +111,7 @@ const Confirmation = () => {
 
                     {/* Right Screen: Interactive Receipt */}
                     <div className="lg:col-span-2">
-                        <ConfirmationTicket mockBooking={mockBooking} />
+                        <ConfirmationTicket mockBooking={bookingData} />
                     </div>
 
                 </div>

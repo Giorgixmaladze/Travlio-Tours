@@ -3,6 +3,17 @@ import { Copy, Download, Calendar, Users } from 'lucide-react'
 import { Button } from '../ui/button'
 
 const ConfirmationTicket = ({ mockBooking }) => {
+    // Format Display Values
+    const formattedId = mockBooking.id?.slice(-8).toUpperCase() || "TRV-XXXXXX"
+    const formattedPrice = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    }).format(mockBooking.totalPrice || 0)
+    
+    const dateRange = mockBooking.startDate && mockBooking.endDate 
+        ? `${new Date(mockBooking.startDate).toLocaleDateString()} - ${new Date(mockBooking.endDate).toLocaleDateString()}`
+        : "Dates not set"
+
     return (
         <div className="receipt-card bg-white rounded-3xl p-8 shadow-2xl shadow-slate-200/50 border border-slate-100 relative overflow-hidden group">
             {/* Decorative Top Edge */}
@@ -30,7 +41,9 @@ const ConfirmationTicket = ({ mockBooking }) => {
 
             <div className="space-y-6">
                 <div>
-                    <h3 className="text-lg font-bold text-slate-900 leading-tight mb-4 group-hover:text-orange-600 transition-colors">{mockBooking.tourName}</h3>
+                    <h3 className="text-lg font-bold text-slate-900 leading-tight mb-4 group-hover:text-orange-600 transition-colors">
+                        {mockBooking.tourName || "Tour Name"}
+                    </h3>
                 </div>
 
                 <div className="space-y-4">
@@ -40,7 +53,7 @@ const ConfirmationTicket = ({ mockBooking }) => {
                         </div>
                         <div>
                             <p className="text-xs font-bold text-slate-400 uppercase">Dates</p>
-                            <p className="font-semibold text-slate-900">{mockBooking.date}</p>
+                            <p className="font-semibold text-slate-900">{dateRange}</p>
                         </div>
                     </div>
                     
@@ -50,7 +63,9 @@ const ConfirmationTicket = ({ mockBooking }) => {
                         </div>
                         <div>
                             <p className="text-xs font-bold text-slate-400 uppercase">Travelers</p>
-                            <p className="font-semibold text-slate-900">{mockBooking.guests}</p>
+                            <p className="font-semibold text-slate-900">
+                                {mockBooking.totalGuests || 0} Travelers
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -58,11 +73,11 @@ const ConfirmationTicket = ({ mockBooking }) => {
                 <div className="pt-6 mt-6 border-t border-dashed border-slate-200 space-y-4 relative">
                     <div className="flex justify-between text-sm">
                         <span className="text-slate-500">Payment Method</span>
-                        <span className="font-medium text-slate-900">{mockBooking.paymentMethod}</span>
+                        <span className="font-medium text-slate-900 capitalize">{mockBooking.paymentMethod}</span>
                     </div>
                     <div className="flex justify-between items-center px-5 py-4 bg-slate-50 rounded-xl border border-slate-100">
                         <span className="font-bold text-slate-900 text-lg">Total Paid</span>
-                        <span className="font-black text-emerald-600 text-2xl">{mockBooking.totalPaid}</span>
+                        <span className="font-black text-emerald-600 text-2xl">{formattedPrice}</span>
                     </div>
                 </div>
             </div>
