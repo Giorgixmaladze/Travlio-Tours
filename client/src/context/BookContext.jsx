@@ -5,7 +5,7 @@ export const BookContext = createContext()
 const BookProvider = ({children}) => {
     const [bookingData, setBookingData] = useState({})
     const createBooking = async (booking,id) => {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/book/create/${id}`,{
+        const response = await fetch(`/api/book/create/${id}`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -18,7 +18,7 @@ const BookProvider = ({children}) => {
         return data
     }
     const getUserBookings = async () => {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/book/my-bookings`, {
+        const response = await fetch(`/api/book/my-bookings`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"

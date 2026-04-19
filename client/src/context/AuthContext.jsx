@@ -12,7 +12,7 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
+                const res = await axios.get(`/api/auth/me`, {
                     withCredentials: true
                 })
                 if (res.data.status === "success" && res.data.data.user) {
@@ -32,7 +32,7 @@ const AuthProvider = ({ children }) => {
 
     const signup = async (userData) => {
         try {
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/signup`, userData, {
+            const response = await axios.post(`/api/auth/signup`, userData, {
                 withCredentials: true
             })
             console.log(response.data)
@@ -50,7 +50,7 @@ const AuthProvider = ({ children }) => {
 
     const login = async (userData) => {
         try {
-            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, userData, {
+            const res = await axios.post(`/api/auth/login`, userData, {
                 withCredentials: true
             })
             console.log(res.data)
@@ -68,7 +68,7 @@ const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {}, {
+            await axios.post(`/api/auth/logout`, {}, {
                 withCredentials: true
             })
             setUser(null)
@@ -85,7 +85,7 @@ const AuthProvider = ({ children }) => {
 
     const autoLogin = async () => {
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/auto-login`, {
+            const res = await fetch(`/api/auth/auto-login`, {
                 method: "GET",
                 credentials: "include",
             })
@@ -110,7 +110,7 @@ const AuthProvider = ({ children }) => {
 
     const updateProfile = async (userData) =>{
         try{
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/update-profile`, {
+            const res = await fetch(`/api/auth/update-profile`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"
