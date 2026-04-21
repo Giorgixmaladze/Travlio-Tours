@@ -44,7 +44,6 @@ const Profile = () => {
         { id: 'overview', label: 'Overview', icon: Briefcase },
         { id: 'bookings', label: 'My Bookings', icon: Calendar },
         { id: 'blogs', label: 'My Blogs', icon: PenLine },
-        { id: 'favorites', label: 'Favorites', icon: Heart },
         { id: 'settings', label: 'Settings', icon: Settings }
     ]
 
