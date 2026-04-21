@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 
+// Define the blog schema
 const blogSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,

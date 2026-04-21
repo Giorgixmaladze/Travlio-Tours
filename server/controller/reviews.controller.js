@@ -1,5 +1,6 @@
 const Review = require("../model/reviews.model")
 
+// controller for getting all reviews
 const getAllReviews = async (req,res) =>{
     try{
         const reviews = await Review.find()

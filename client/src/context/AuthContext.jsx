@@ -10,6 +10,7 @@ const AuthProvider = ({ children }) => {
     const navigate = useNavigate()
 
     useEffect(() => {
+        // Check if user is already logged in on component mount
         const checkAuth = async () => {
             try {
                 const res = await axios.get(`/api/auth/me`, {
@@ -29,7 +30,7 @@ const AuthProvider = ({ children }) => {
     }, [])
 
     
-
+    // controller for signup
     const signup = async (userData) => {
         try {
             const response = await axios.post(`/api/auth/signup`, userData, {
@@ -47,7 +48,7 @@ const AuthProvider = ({ children }) => {
     }
 
 
-
+    /// controller for login
     const login = async (userData) => {
         try {
             const res = await axios.post(`/api/auth/login`, userData, {
@@ -65,7 +66,7 @@ const AuthProvider = ({ children }) => {
         }
     }
 
-
+// controller for logout
     const logout = async () => {
         try {
             await axios.post(`/api/auth/logout`, {}, {
@@ -82,7 +83,7 @@ const AuthProvider = ({ children }) => {
             };
         }
     }
-
+    // controller for auto-login
     const autoLogin = async () => {
         try {
             const res = await fetch(`/api/auth/auto-login`, {
@@ -107,7 +108,7 @@ const AuthProvider = ({ children }) => {
         }
     }
 
-
+    // controller for updating profile
     const updateProfile = async (userData) =>{
         try{
             const res = await fetch(`/api/auth/update-profile`, {

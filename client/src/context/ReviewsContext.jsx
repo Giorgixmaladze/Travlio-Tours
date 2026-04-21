@@ -7,7 +7,7 @@ const ReviewsProvider = ({ children }) => {
     const [reviews, setReviews] = useState([])
     const [loading, setLoading] = useState(false)
 
-
+    // controller for fetching all reviews
     const fetchReviews = async () => {
         try {
             setLoading(true)
