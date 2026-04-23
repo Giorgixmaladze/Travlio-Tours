@@ -4,8 +4,8 @@ export const BookContext = createContext()
 
 const BookProvider = ({children}) => {
     const [bookingData, setBookingData] = useState({})
-    const createBooking = async (booking,id) => {``
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/book/create/${id}`,{
+    const createBooking = async (booking,id) => {
+        const response = await fetch(`http://localhost:3000/api/book/create/${id}`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"

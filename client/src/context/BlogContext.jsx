@@ -23,9 +23,6 @@ const BlogProvider = ({ children }) => {
         }
     }
 
-    useEffect(() => {
-        getAllBlogs()
-    }, [])
 
     const fetchBlogById = async (id) => {
         try {
@@ -47,10 +44,9 @@ const BlogProvider = ({ children }) => {
         try {
             const res = await fetch("http://localhost:3000/api/blogs/post-blog", {
                 method: "POST",
-                // Do NOT set Content-Type — the browser sets it automatically
-                // with the correct multipart/form-data boundary for FormData
+           
                 credentials: "include",
-                body: blogData  // blogData is already a FormData object
+                body: blogData 
             })
             const data = await res.json()
             if (data.success) {
