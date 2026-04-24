@@ -1,5 +1,7 @@
 const Tour = require("../model/tours.model")
 
+
+// controller for getting all tours
 const getAllTours = async (req, res) =>{
     try {
      
@@ -10,7 +12,7 @@ const getAllTours = async (req, res) =>{
     }
 }
 
-
+// controller for getting popular tours
 const getPopularTours = async (req, res) => {
     try {
         const tours = await Tour.find().limit(6)
@@ -20,6 +22,8 @@ const getPopularTours = async (req, res) => {
     }
 }
 
+
+// controller for getting a single tour by id
 const getTour = async (req, res,next) => {
     try {
         const tour = await Tour.findById(req.params.id)

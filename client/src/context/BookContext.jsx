@@ -4,8 +4,9 @@ export const BookContext = createContext()
 
 const BookProvider = ({children}) => {
     const [bookingData, setBookingData] = useState({})
+    // controller for creating a new booking
     const createBooking = async (booking,id) => {
-        const response = await fetch(`http://localhost:3000/api/book/create/${id}`,{
+        const response = await fetch(`/api/book/create/${id}`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -17,8 +18,11 @@ const BookProvider = ({children}) => {
         console.log(data)
         return data
     }
+
+
+    // controller for getting bookings by single user
     const getUserBookings = async () => {
-        const response = await fetch(`http://localhost:3000/api/book/my-bookings`, {
+        const response = await fetch(`/api/book/my-bookings`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"

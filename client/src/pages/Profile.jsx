@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react'
-import { Calendar, Heart, Settings, Briefcase, PenLine } from 'lucide-react'
+import { Calendar, Settings, Briefcase, PenLine } from 'lucide-react'
 import { AuthContext } from '../context/AuthContext'
 import { BookContext } from '../context/BookContext'
 import { useNavigate } from 'react-router-dom'
@@ -72,7 +72,7 @@ const Profile = () => {
                                 />
                             )}
                             {activeTab === 'blogs' && <MyBlogsTab userData={userData} />}
-    
+
                             {activeTab === 'settings' && <SettingsTab />}
                         </div>
                     </div>

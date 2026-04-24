@@ -10,9 +10,10 @@ const AuthProvider = ({ children }) => {
     const navigate = useNavigate()
 
     useEffect(() => {
+        // Check if user is already logged in on component mount
         const checkAuth = async () => {
             try {
-                const res = await axios.get("http://localhost:3000/api/auth/me", {
+                const res = await axios.get(`/api/auth/me`, {
                     withCredentials: true
                 })
                 if (res.data.status === "success" && res.data.data.user) {
@@ -29,10 +30,10 @@ const AuthProvider = ({ children }) => {
     }, [])
 
     
-
+    // controller for signup
     const signup = async (userData) => {
         try {
-            const response = await axios.post("http://localhost:3000/api/auth/signup", userData, {
+            const response = await axios.post(`/api/auth/signup`, userData, {
                 withCredentials: true
             })
             console.log(response.data)
@@ -47,10 +48,10 @@ const AuthProvider = ({ children }) => {
     }
 
 
-
+    /// controller for login
     const login = async (userData) => {
         try {
-            const res = await axios.post("http://localhost:3000/api/auth/login", userData, {
+            const res = await axios.post(`/api/auth/login`, userData, {
                 withCredentials: true
             })
             console.log(res.data)
@@ -65,15 +66,15 @@ const AuthProvider = ({ children }) => {
         }
     }
 
-
+// controller for logout
     const logout = async () => {
         try {
-            await axios.post("http://localhost:3000/api/auth/logout", {}, {
+            await axios.post(`/api/auth/logout`, {}, {
                 withCredentials: true
             })
             setUser(null)
             navigate("/signin")
-            return { success: true, data: res.data };
+            return { success: true };
         } catch (error) {
             console.log(error)
             return {
@@ -82,10 +83,10 @@ const AuthProvider = ({ children }) => {
             };
         }
     }
-
+    // controller for auto-login
     const autoLogin = async () => {
         try {
-            const res = await fetch(`http://localhost:3000/api/auth/auto-login`, {
+            const res = await fetch(`/api/auth/auto-login`, {
                 method: "GET",
                 credentials: "include",
             })
@@ -107,10 +108,10 @@ const AuthProvider = ({ children }) => {
         }
     }
 
-
+    // controller for updating profile
     const updateProfile = async (userData) =>{
         try{
-            const res = await fetch(`http://localhost:3000/api/auth/update-profile`, {
+            const res = await fetch(`/api/auth/update-profile`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"

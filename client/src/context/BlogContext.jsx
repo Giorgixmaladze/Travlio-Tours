@@ -8,10 +8,12 @@ const BlogProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
     const [blog, setBlog] = useState(null);
+
+    // controller for getting all blogs
     const getAllBlogs = async () => {
         try {
             setLoading(true)
-            const res = await fetch("http://localhost:3000/api/blogs/get-blogs")
+            const res = await fetch(`/api/blogs/get-blogs`)
             const data = await res.json()
             if (data.success) {
                 setBlogs(data.data)
@@ -24,10 +26,11 @@ const BlogProvider = ({ children }) => {
     }
 
 
+    // controller for getting a single blog by id
     const fetchBlogById = async (id) => {
         try {
             setLoading(true)
-            const res = await fetch(`http://localhost:3000/api/blogs/get-blog/${id}`)
+            const res = await fetch(`/api/blogs/get-blog/${id}`)
             const data = await res.json()
             if (data.success) {
                 setBlog(data.data)
@@ -40,13 +43,15 @@ const BlogProvider = ({ children }) => {
             setLoading(false)
         }
     }
+
+
+    // controller for adding a new blog
     const addBlog = async (blogData) => {
         try {
-            const res = await fetch("http://localhost:3000/api/blogs/post-blog", {
+            const res = await fetch(`/api/blogs/post-blog`, {
                 method: "POST",
-           
                 credentials: "include",
-                body: blogData 
+                body: blogData
             })
             const data = await res.json()
             if (data.success) {
@@ -61,10 +66,10 @@ const BlogProvider = ({ children }) => {
             };
         }
     }
-
+// controller for getting blogs by single user
     const getBlogByUser = async () =>{
         try {
-            const res = await fetch("http://localhost:3000/api/blogs/my-blogs", {
+            const res = await fetch(`/api/blogs/my-blogs`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"

@@ -3,14 +3,14 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
 
-
+// Helper function to create a JWT token
 const signToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_KEY, {
         expiresIn: process.env.JWT_EXPIRES_IN || "7d",
     });
 };
 
-
+// Helper function to create cookie and send a token in the response
 const createSendToken = (user, statusCode, res) => {
     const token = signToken(user._id);
     const cookieMaxAgeDays = Number(process.env.COOKIE_EXPIRES_IN || 7);
@@ -33,6 +33,8 @@ const createSendToken = (user, statusCode, res) => {
     });
 };
 
+// signup controller
+
 const createUser = async (req, res, next) => {
     try {
         const user = await User.create(req.body)
@@ -54,6 +56,7 @@ const createUser = async (req, res, next) => {
 }
 
 
+// login controller
 const login = async (req, res, next) => {
     try {
         const { email, password } = req.body
@@ -69,17 +72,15 @@ const login = async (req, res, next) => {
         if (!isPasswordValid) {
             return res.status(401).json({ message: "Invalid password" })
         }
-
-        // Remove password from the user object before sending it to the client
         req.user = user;
 
-        // createSendToken automatically sends the response, so we return it directly instead of calling res.status(200).json first
+       
         return createSendToken(user, 200, res)
     } catch (error) {
         next(error)
     }
 }
-
+// logout controller
 const logOut = (req, res, next) => {
     res.clearCookie('lt', {
         secure: process.env.NODE_ENV === "production",
@@ -90,6 +91,7 @@ const logOut = (req, res, next) => {
     res.json("logged out !")
 }
 
+//controller for profile details
 const getMe = async (req, res, next) => {
     try {
         const token = req.cookies.lt;
@@ -113,25 +115,8 @@ const getMe = async (req, res, next) => {
     }
 }
 
-const verifyEmail = async (req, res, next) => {
-    try {
-        const { code } = req.params;
 
-        const user = await User.findOne({ verificationCode: code });
-        if (!user) {
-            return res.status(400).json({ message: "Invalid or expired verification code" });
-        }
-
-        user.isVerified = true;
-        user.verificationCode = undefined;
-        await user.save({ validateBeforeSave: false });
-
-        res.redirect(`https://travlio-tours.onrender.com/verify-success`);
-    } catch (error) {
-        next(error);
-    }
-}
-
+// controller for auto login
 const autoLogin = async (req, res, next) => {
     try {
         const token = req.cookies.lt;
@@ -159,7 +144,8 @@ const autoLogin = async (req, res, next) => {
     }
 };
 
-const updateProfile = async (req, res, next) =>{
+// controller for profile edit
+const updateProfile = async (req, res, next) => {
     try {
 
         const allowedUpdates = ['userName', 'location', 'phone'];
@@ -171,8 +157,8 @@ const updateProfile = async (req, res, next) =>{
         }
 
         const user = await User.findOneAndUpdate(
-            { _id: req.user.id }, 
-            updateData, 
+            { _id: req.user.id },
+            updateData,
             { new: true, runValidators: true }
         );
 
@@ -187,6 +173,7 @@ const updateProfile = async (req, res, next) =>{
     }
 }
 
+// Middleware to protect routes and ensure the user is authenticated
 const protect = async (req, res, next) => {
     try {
         const token = req.cookies.lt;
@@ -208,4 +195,4 @@ const protect = async (req, res, next) => {
     }
 };
 
-module.exports = { createUser, login, logOut, getMe, autoLogin, protect, updateProfile, verifyEmail }
+module.exports = { createUser, login, logOut, getMe, autoLogin, protect, updateProfile }

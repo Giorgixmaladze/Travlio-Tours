@@ -8,16 +8,17 @@ const ToursProvider = ({ children }) => {
     const [loading, setLoading] = useState(false)
     const [popularTours, setPopularTours] = useState([])
 
+    // controller for fetching popular tours
     const fetchPopularTours = async () => {
         setLoading(true)
-        const data = await fetchData(`http://localhost:3000/api/tours/popular`)
+        const data = await fetchData(`/api/tours/popular`)
         setPopularTours(data)
         setLoading(false)
     }
-
+// controller for fetching all tours
     const fetchTours = async () => {
         setLoading(true)
-        const data = await fetchData(`http://localhost:3000/api/tours`)
+        const data = await fetchData(`/api/tours`)
         setTours(data)
         setLoading(false)
 
@@ -28,12 +29,12 @@ const ToursProvider = ({ children }) => {
         fetchPopularTours()
     }, [])
 
-
+// controller for fetching a single tour by id
     const getTourById = useCallback(async (id) => {
         setLoading(true)
 
         try {
-            const data = await fetchData(`http://localhost:3000/api/tours/${id}`)
+            const data = await fetchData(`/api/tours/${id}`)
             return data
         } finally {
             setLoading(false)

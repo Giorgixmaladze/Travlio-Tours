@@ -2,6 +2,7 @@ const Booking = require("../model/book.model")
 const Book = require("../model/book.model")
 const Tour = require("../model/tours.model")
 
+// controller for creating a booking
 const createBooking = async (req,res,next) => {
     try {
         const id = req.params.id
@@ -22,6 +23,8 @@ const createBooking = async (req,res,next) => {
     }
 }
 
+
+// controller for getting bookings by single user
 const getUserBookings = async (req, res) => {
     try {
         const bookings = await Booking.find({ userId: req.user._id })

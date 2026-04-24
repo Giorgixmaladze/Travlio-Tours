@@ -7,11 +7,11 @@ const ReviewsProvider = ({ children }) => {
     const [reviews, setReviews] = useState([])
     const [loading, setLoading] = useState(false)
 
-
+    // controller for fetching all reviews
     const fetchReviews = async () => {
         try {
             setLoading(true)
-            const data = await fetchData(`http://localhost:3000/api/reviews`)
+            const data = await fetchData(`/api/reviews`)
             setReviews(data)
             setLoading(false)
         } catch (err) {
