@@ -10,14 +10,14 @@ const ToursProvider = ({ children }) => {
 
     const fetchPopularTours = async () => {
         setLoading(true)
-        const data = await fetchData(`${import.meta.env.VITE_API_URL}/api/tours/popular`)
+        const data = await fetchData(`http://localhost:3000/api/tours/popular`)
         setPopularTours(data)
         setLoading(false)
     }
 
     const fetchTours = async () => {
         setLoading(true)
-        const data = await fetchData(`${import.meta.env.VITE_API_URL}/api/tours`)
+        const data = await fetchData(`http://localhost:3000/api/tours`)
         setTours(data)
         setLoading(false)
 
@@ -33,7 +33,7 @@ const ToursProvider = ({ children }) => {
         setLoading(true)
 
         try {
-            const data = await fetchData(`${import.meta.env.VITE_API_URL}/api/tours/${id}`)
+            const data = await fetchData(`http://localhost:3000/api/tours/${id}`)
             return data
         } finally {
             setLoading(false)

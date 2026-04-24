@@ -2,9 +2,10 @@ const express = require("express")
 const dotenv = require("dotenv")
 dotenv.config()
 const mongoose = require("mongoose")
-const app = express()
-const toursRouter = require("./router/tours.router")
 const cors = require("cors")
+const app = express()
+
+const toursRouter = require("./router/tours.router")
 const dns = require("dns")
 const reviewsRouter = require("./router/reviews.router")
 const staffRouter = require("./router/staff.router")
@@ -16,19 +17,23 @@ const BlogRouter = require("./router/blog.router")
 
 const allowedOrigins = [
     "https://travlio-tours.onrender.com",
-    "http://localhost:5173" // Add localhost for development
+    "http://localhost:5173",
+    "http://localhost:5174"
 ]
 
-app.use(cors({
+const corsOptions = {
     origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'))
-        }
+        // Allow tools/requests without Origin header (e.g. Postman, curl)
+        if (!origin) return callback(null, true)
+        if (allowedOrigins.includes(origin)) return callback(null, true)
+        return callback(new Error("Not allowed by CORS"))
     },
-    credentials: true
-}))
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
+}
+
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(cookieParser())
 app.use("/api/tours", toursRouter)
@@ -40,8 +45,13 @@ app.use("/api/blogs", BlogRouter)
 
 dns.setServers(["8.8.8.8", "8.8.4.4"])
 app.use(express.static(path.join(__dirname, "dist")))
-app.get(/.*/, (req, res) => {
-    res.sendFile(path.join(__dirname, "dist", "index.html"));
+
+// Catch-all route for frontend (only for non-API routes)
+app.use((req, res, next) => {
+    if (req.method === "GET" && !req.url.startsWith("/api") && !req.url.startsWith("/uploads")) {
+        return res.sendFile(path.join(__dirname, "dist", "index.html"));
+    }
+    next();
 });
 
 

@@ -34,12 +34,6 @@ const Home = () => {
     return (
         <div ref={containerRef}>
             <Header />
-            <Link to="/blog">
-                <button className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-4 py-2.5 rounded-xl shadow-md shadow-orange-500/30 hover:shadow-orange-600/40 hover:-translate-y-0.5 transition-all duration-200">
-               
-                    Write Post
-                </button>
-            </Link>
             <div className="home-section">
                 <HomeMain />
             </div>
