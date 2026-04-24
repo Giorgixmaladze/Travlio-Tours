@@ -3,6 +3,7 @@ import { Calendar, MapPin, ChevronRight } from 'lucide-react'
 import { format } from 'date-fns'
 
 const BookingsTab = ({ bookings, loadingBookings, navigate }) => {
+    
     return (
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="flex items-center justify-between mb-8">

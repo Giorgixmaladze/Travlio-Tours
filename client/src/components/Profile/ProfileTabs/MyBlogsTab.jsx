@@ -6,10 +6,6 @@ import { BlogContext } from '../../../context/BlogContext'
 
 
 const BlogPostCard = ({ blog }) => {
-    const { getBlogByUser } = useContext(BlogContext)
-    useEffect(() => {
-        getBlogByUser()
-    }, [])
     const formattedDate = blog.createdAt
         ? new Date(blog.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })
         : blog.date || ""
@@ -69,7 +65,11 @@ const BlogPostCard = ({ blog }) => {
 
 const MyBlogsTab = ({ userData }) => {
     // Replace demoBlogs with real user blog data when ready
-    const {blogs} = useContext(BlogContext)
+    const {blogs, getBlogByUser} = useContext(BlogContext)
+
+    useEffect(() => {
+        getBlogByUser()
+    }, [])
 
     return (
         <div>

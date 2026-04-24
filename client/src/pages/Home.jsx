@@ -10,6 +10,8 @@ import Footer from "../components/Footer"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { useRef } from "react"
+import { Link } from "react-router-dom"
+
 
 const Home = () => {
     const containerRef = useRef(null)

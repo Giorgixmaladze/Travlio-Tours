@@ -72,6 +72,7 @@ const Profile = () => {
                                 />
                             )}
                             {activeTab === 'blogs' && <MyBlogsTab userData={userData} />}
+
                             {activeTab === 'settings' && <SettingsTab />}
                         </div>
                     </div>

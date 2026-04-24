@@ -25,9 +25,6 @@ const BlogProvider = ({ children }) => {
         }
     }
 
-    useEffect(() => {
-        getAllBlogs()
-    }, [])
 
     // controller for getting a single blog by id
     const fetchBlogById = async (id) => {

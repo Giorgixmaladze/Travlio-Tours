@@ -4,7 +4,6 @@ export const BookContext = createContext()
 
 const BookProvider = ({children}) => {
     const [bookingData, setBookingData] = useState({})
-
     // controller for creating a new booking
     const createBooking = async (booking,id) => {
         const response = await fetch(`/api/book/create/${id}`,{
