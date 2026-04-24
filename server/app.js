@@ -2,10 +2,10 @@ const express = require("express")
 const dotenv = require("dotenv")
 dotenv.config()
 const mongoose = require("mongoose")
-const cors = require("cors")
-const app = express()
 
+const app = express()
 const toursRouter = require("./router/tours.router")
+const cors = require("cors")
 const dns = require("dns")
 const reviewsRouter = require("./router/reviews.router")
 const staffRouter = require("./router/staff.router")
@@ -21,19 +21,18 @@ const allowedOrigins = [
     "http://localhost:5174"
 ]
 
-const corsOptions = {
+app.use(cors({
     origin: (origin, callback) => {
-        // Allow tools/requests without Origin header (e.g. Postman, curl)
-        if (!origin) return callback(null, true)
-        if (allowedOrigins.includes(origin)) return callback(null, true)
-        return callback(new Error("Not allowed by CORS"))
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
-}
+        if (!origin) return callback(null, true);
 
-app.use(cors(corsOptions))
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true
+}))
 app.use(express.json())
 app.use(cookieParser())
 app.use("/api/tours", toursRouter)
@@ -45,13 +44,8 @@ app.use("/api/blogs", BlogRouter)
 
 dns.setServers(["8.8.8.8", "8.8.4.4"])
 app.use(express.static(path.join(__dirname, "dist")))
-
-// Catch-all route for frontend (only for non-API routes)
-app.use((req, res, next) => {
-    if (req.method === "GET" && !req.url.startsWith("/api") && !req.url.startsWith("/uploads")) {
-        return res.sendFile(path.join(__dirname, "dist", "index.html"));
-    }
-    next();
+app.get(/.*/, (req, res) => {
+    res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
 
