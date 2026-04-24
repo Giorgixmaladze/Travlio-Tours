@@ -86,9 +86,25 @@ const BlogProvider = ({ children }) => {
     }
 
 
+    const deleteBlogByUser = async (id) => {
+        try {
+            const res = await fetch(`/api/blogs/delete-blog/${id}`, {
+                method: "DELETE",
+                credentials: "include",
+            })
+            const data = await res.json()
+            if (data.success) {
+                setBlogs(blogs.filter((blog) => blog._id !== id))
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
 
     return (
-        <BlogContext.Provider value={{ blogs, loading, error, addBlog, getAllBlogs, fetchBlogById,blog,getBlogByUser }}>
+        <BlogContext.Provider value={{ blogs, loading, error, addBlog, getAllBlogs, fetchBlogById,blog,getBlogByUser,deleteBlogByUser }}>
             {children}
         </BlogContext.Provider>
     )

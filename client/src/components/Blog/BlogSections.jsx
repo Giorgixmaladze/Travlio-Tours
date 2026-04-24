@@ -1,9 +1,12 @@
-import { FaCalendarAlt, FaUser, FaTag, FaArrowRight } from "react-icons/fa"
+import { FaCalendarAlt, FaUser, FaTag, FaArrowRight,FaTrash } from "react-icons/fa"
 import { Link } from "react-router-dom"
+import { useContext } from "react"
+import { BlogContext } from "../../context/BlogContext"
 
 
-
-const BlogCard = ({ post }) => (
+const BlogCard = ({ post }) => {
+    const {deleteBlogByUser} = useContext(BlogContext)
+    return(
     <div className="bg-white rounded-md shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition-shadow duration-300 flex flex-col">
         {/* Image */}
         <div className="overflow-hidden h-52 shrink-0">
@@ -48,8 +51,10 @@ const BlogCard = ({ post }) => (
             >
                 Read More <FaArrowRight className="text-xs" />
             </Link>
+            <button onClick={() => deleteBlogByUser(post._id)} className="flex items-center gap-1 text-red-500 hover:text-red-600 text-xs font-semibold transition-colors duration-200 mt-1"><FaTrash className="text-xs" />Delete</button>
         </div>
     </div>
-)
+    )
+}
 
 export {BlogCard }
