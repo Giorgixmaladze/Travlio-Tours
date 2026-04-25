@@ -42,7 +42,7 @@ app.use("/api/auth", authRouter)
 app.use("/api/book", router)
 app.use("/api/blogs", BlogRouter)
 
-// dns.setServers(["8.8.8.8", "8.8.4.4"])
+dns.setServers(["8.8.8.8", "8.8.4.4"])
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
 app.use(express.static(path.join(__dirname, "dist")))
