@@ -112,6 +112,8 @@ const ProfileEdit = ({ isOpen, onClose, userData }) => {
                                 onChange={handleChange}
                                 className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all duration-200 text-gray-800"
                                 placeholder="Enter your email"
+                                
+                                disabled
                             />
                         </div>
 
@@ -160,6 +162,7 @@ const ProfileEdit = ({ isOpen, onClose, userData }) => {
                                 onChange={handleChange}
                                 className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all duration-200 text-gray-800"
                                 placeholder="e.g. Travel Blogger, Photographer"
+                                disabled
                             />
                         </div>
                     </div>
