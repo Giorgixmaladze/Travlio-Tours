@@ -29,9 +29,15 @@ const BlogHero = () => (
 )
 
 const Blog = () => {
+   
     const containerRef = useRef(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const {blogs,loading,error,addBlog,getAllBlogs} = useContext(BlogContext)
+    
+    useEffect(() => {
+        getAllBlogs()
+    }, [])
+
 
     useGSAP(() => {
         const tl = gsap.timeline()
