@@ -1,4 +1,11 @@
 const Blog = require("../model/blogs.model")
+const cloudinary = require("cloudinary").v2
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+})
 
 
 // controller for posting a blog
@@ -7,13 +14,15 @@ const postBlog = async (req, res, next) => {
         if (!req.file) {
             return res.status(400).json({ success: false, message: "Cover image is required." })
         }
-        
-    
+        const uploadResult = await cloudinary.uploader.upload(req.file.path, {
+            folder: "blogs",
+            resource_type: "image",
+        });
 
         const blog = await Blog.create({
             user: req.user.id,
             ...req.body,
-            image: `http://localhost:3000/${imagePath}`
+            image: uploadResult.secure_url
         })
         res.status(200).json({
             success: true,

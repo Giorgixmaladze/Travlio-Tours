@@ -2,6 +2,7 @@ const express = require("express")
 const dotenv = require("dotenv")
 dotenv.config()
 const mongoose = require("mongoose")
+
 const app = express()
 const toursRouter = require("./router/tours.router")
 const cors = require("cors")
@@ -16,15 +17,18 @@ const BlogRouter = require("./router/blog.router")
 
 const allowedOrigins = [
     "https://travlio-tours.onrender.com",
-    "http://localhost:5173" // Add localhost for development
+    "http://localhost:5173",
+    "http://localhost:5174"
 ]
 
 app.use(cors({
     origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true)
+        if (!origin) return callback(null, true);
+
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
         } else {
-            callback(new Error('Not allowed by CORS'))
+            callback(new Error('Not allowed by CORS'));
         }
     },
     credentials: true

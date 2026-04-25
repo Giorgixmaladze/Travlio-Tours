@@ -1,14 +1,14 @@
 import Header from "../components/Header"
 import Footer from "../components/Footer"
-import {  BlogCard } from "../components/Blog/BlogSections"
+import { BlogCard } from "../components/Blog/BlogSections"
 import AddBlogModal from "../components/Blog/AddBlogModal"
 import { Link } from "react-router-dom"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
-import { useRef, useState } from "react"
+import { useRef, useState,useEffect } from "react"
 import { PenLine } from "lucide-react"
-import {useContext} from "react"
-import {BlogContext} from "../context/BlogContext"
+import { useContext } from "react"
+import { BlogContext } from "../context/BlogContext"
 const BlogHero = () => (
     <div
         className="relative w-full h-64 md:h-80 bg-cover bg-center flex items-center justify-center blog-hero"
@@ -32,12 +32,11 @@ const Blog = () => {
    
     const containerRef = useRef(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const {blogs,loading,error,addBlog,getAllBlogs} = useContext(BlogContext)
-    
+    const { blogs, loading, error, addBlog,getAllBlogs } = useContext(BlogContext)
+
     useEffect(() => {
         getAllBlogs()
     }, [])
-
 
     useGSAP(() => {
         const tl = gsap.timeline()
