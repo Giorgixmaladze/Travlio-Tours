@@ -2,16 +2,21 @@ import { FaCalendarAlt, FaUser, FaTag, FaArrowRight,FaTrash } from "react-icons/
 import { Link } from "react-router-dom"
 import { useContext } from "react"
 import { BlogContext } from "../../context/BlogContext"
+import { AuthContext } from "../../context/AuthContext"
 
 
 const BlogCard = ({ post }) => {
     const {deleteBlogByUser} = useContext(BlogContext)
+    const {user} = useContext(AuthContext)
+  
+
+
     return(
     <div className="bg-white rounded-md shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition-shadow duration-300 flex flex-col">
         {/* Image */}
         <div className="overflow-hidden h-52 shrink-0">
             <img
-                src={post.image}
+                src={post.image?.url || post.image}
                 alt={post.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
@@ -51,7 +56,11 @@ const BlogCard = ({ post }) => {
             >
                 Read More <FaArrowRight className="text-xs" />
             </Link>
+           {user._id === post.user && (
             <button onClick={() => deleteBlogByUser(post._id)} className="flex items-center gap-1 text-red-500 hover:text-red-600 text-xs font-semibold transition-colors duration-200 mt-1"><FaTrash className="text-xs" />Delete</button>
+           )}
+          
+           
         </div>
     </div>
     )

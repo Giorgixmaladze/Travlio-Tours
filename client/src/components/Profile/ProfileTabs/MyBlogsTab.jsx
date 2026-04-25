@@ -16,7 +16,7 @@ const BlogPostCard = ({ blog }) => {
             <div className="shrink-0 w-full sm:w-36 h-28 rounded-xl overflow-hidden bg-gray-200">
                 {blog.image ? (
                     <img
-                        src={blog.image}
+                        src={blog.image?.url || blog.image}
                         alt={blog.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />

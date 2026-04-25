@@ -67,7 +67,7 @@ const BlogDetails = () => {
             <div className="relative w-full h-72 md:h-[28rem] overflow-hidden">
                 {blog.image ? (
                     <img
-                        src={blog.image}
+                        src={blog.image?.url || blog.image}
                         alt={blog.title}
                         className="w-full h-full object-cover"
                     />

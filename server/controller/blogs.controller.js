@@ -1,5 +1,6 @@
 const Blog = require("../model/blogs.model")
 const cloudinary = require("cloudinary").v2
+const deleteImage = require("../utils/deleteImage");
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -18,11 +19,14 @@ const postBlog = async (req, res, next) => {
             folder: "blogs",
             resource_type: "image",
         });
-
+       
         const blog = await Blog.create({
             user: req.user.id,
             ...req.body,
-            image: uploadResult.secure_url
+            image:{
+                public_id: uploadResult.public_id,
+                url: uploadResult.secure_url
+            }
         })
         res.status(200).json({
             success: true,
@@ -88,6 +92,7 @@ const deleteBlogByUSer = async (req,res, next ) =>{
         if (blog.user.toString() !== req.user.id && req.user.role !== "admin") {
             return res.status(403).json({ success: false, message: 'You are not authorized to delete this blog' })
         }
+        await deleteImage(blog.image.public_id)
         await blog.deleteOne()
         res.status(200).json({
             success: true,
