@@ -1,5 +1,5 @@
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock } from "react-icons/fa"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { MessageContext } from "../../context/MessageContext.jsx"
 
 const contactInfo = [
@@ -46,21 +46,28 @@ const ContactInfo = () => (
 
 const ContactForm = () => {
     const { sendMessage } = useContext(MessageContext)
-    const formData = {
+    const [formData, setFormData] = useState({
         name: "",
         email: "",
+        subject: "",
         message: ""
-    }
+    })
 
     const handleOnChange = (e) => {
         const { name, value } = e.target
-        formData[name] = value
+        setFormData(prev => ({ ...prev, [name]: value }))
     }
 
     const handleOnSubmit = async (e) => {
         e.preventDefault()
-        await sendMessage(formData)
-        e.target.reset()
+        const res = await sendMessage(formData)
+        if (res.message === "success") {
+            alert("Message sent successfully!")
+            e.target.reset()
+            setFormData({ name: "", email: "", subject: "", message: "" })
+        } else {
+            alert("Failed to send message.")
+        }
     }
 
     return (
@@ -76,6 +83,9 @@ const ContactForm = () => {
                     <div className="flex flex-col gap-1">
                         <label className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Full Name</label>
                         <input
+                            name="name"
+                            value={formData.name}
+                            onChange={handleOnChange}
                             type="text"
                             placeholder="John Doe"
                             className="border border-gray-200 rounded-sm px-4 py-3 text-sm text-gray-700 focus:outline-none focus:border-orange-400 transition-colors"
@@ -84,6 +94,9 @@ const ContactForm = () => {
                     <div className="flex flex-col gap-1">
                         <label className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Email</label>
                         <input
+                            name="email"
+                            value={formData.email}
+                            onChange={handleOnChange}
                             type="email"
                             placeholder="john@example.com"
                             className="border border-gray-200 rounded-sm px-4 py-3 text-sm text-gray-700 focus:outline-none focus:border-orange-400 transition-colors"
@@ -93,6 +106,9 @@ const ContactForm = () => {
                 <div className="flex flex-col gap-1">
                     <label className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Subject</label>
                     <input
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleOnChange}
                         type="text"
                         placeholder="How can we help?"
                         className="border border-gray-200 rounded-sm px-4 py-3 text-sm text-gray-700 focus:outline-none focus:border-orange-400 transition-colors"
@@ -101,6 +117,9 @@ const ContactForm = () => {
                 <div className="flex flex-col gap-1">
                     <label className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Message</label>
                     <textarea
+                        name="message"
+                        value={formData.message}
+                        onChange={handleOnChange}
                         rows={5}
                         placeholder="Tell us about your travel plans..."
                         className="border border-gray-200 rounded-sm px-4 py-3 text-sm text-gray-700 focus:outline-none focus:border-orange-400 transition-colors resize-none"
