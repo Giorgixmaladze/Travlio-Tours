@@ -21,4 +21,4 @@ const MessageProvider = ({ children }) => {
     )
 }
 
-export { MessageProvider }
+export default MessageProvider
