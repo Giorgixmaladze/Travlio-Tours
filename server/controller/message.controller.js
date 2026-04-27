@@ -5,10 +5,10 @@ const sendMail = require("../utils/sendMessage")
 const sendMessage = async (req, res) => {
     try {
 
-        const newMessage = new Message({ user: req.user.id, ...req.body })
+        const newMessage = new Message({ ...req.body })
         await newMessage.save()
         await sendMail(newMessage.email, newMessage.subject, newMessage.message)
-        res.status(201).json({ success: true, message: "Message sent successfully" })
+        res.status(200).json({ message: "success" })
     } catch (error) {
         console.log(error)
         res.status(500).json({ success: false, message: "Internal server error" })
