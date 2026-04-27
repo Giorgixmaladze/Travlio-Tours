@@ -1,5 +1,7 @@
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock } from "react-icons/fa"
-
+import { useContext } from "react"
+import { MessageContext } from "../../context/MessageContext"
+const { sendMessage } = useContext(MessageContext)
 const contactInfo = [
     {
         icon: FaMapMarkerAlt,
@@ -42,7 +44,25 @@ const ContactInfo = () => (
     </div>
 )
 
-const ContactForm = () => (
+const ContactForm = () => {
+    const formData = {
+        name: "",
+        email: "",
+        message: ""
+    }
+
+    const handleOnChange = (e) => {
+        const { name, value } = e.target
+        formData[name] = value
+    }
+
+    const handleOnSubmit = async (e) => {
+        e.preventDefault()
+        await sendMessage(formData)
+        e.target.reset()
+    }
+
+    return (
     <div className="flex flex-col md:flex-row gap-10 items-start">
         {/* Form */}
         <div className="w-full">
@@ -50,7 +70,7 @@ const ContactForm = () => (
             <h2 className="text-3xl font-bold text-gray-800 mb-1">Send Us a Message</h2>
             <div className="w-12 h-1 bg-orange-500 rounded mb-6" />
 
-            <form className="flex flex-col gap-4">
+            <form onSubmit={handleOnSubmit} onChange={handleOnChange} className="flex flex-col gap-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="flex flex-col gap-1">
                         <label className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Full Name</label>
@@ -107,6 +127,7 @@ const ContactForm = () => (
             />
         </div>
     </div>
-)
+    )
+}
 
 export { ContactInfo, ContactForm }

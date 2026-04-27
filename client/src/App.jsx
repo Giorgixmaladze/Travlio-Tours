@@ -21,7 +21,7 @@ import Confirmation from './pages/Confirmation'
 import BookProvider from './context/BookContext'
 import BlogProvider from './context/BlogContext'
 import BlogDetails from './pages/BlogDetails'
-
+import MessageProvider from './context/MessageContext'
 function App() {
 
   return (
@@ -32,6 +32,7 @@ function App() {
             <AuthProvider>
               <BookProvider>
                 <BlogProvider>
+                  <MessageProvider>
               <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/tours' element={<Tours />} />
@@ -46,6 +47,7 @@ function App() {
                 <Route path='/booking/:id' element={<Booking />} />
                 <Route path='/confirmation' element={<Confirmation />} />
               </Routes>
+                  </MessageProvider>
                 </BlogProvider>
               </BookProvider>
             </AuthProvider>
