@@ -11,7 +11,7 @@ const ReviewsProvider = ({ children }) => {
     const fetchReviews = async () => {
         try {
             setLoading(true)
-            const data = await fetchData(`/api/reviews`)
+            const data = await fetchData(`${import.meta.env.VITE_API_URL}/api/reviews`)
             setReviews(data)
             setLoading(false)
         } catch (err) {

@@ -1,6 +1,7 @@
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock } from "react-icons/fa"
 import { useContext } from "react"
-import { MessageContext } from "../../context/MessageContext"
+import { MessageContext } from "../../context/MessageContext.jsx"
+
 const contactInfo = [
     {
         icon: FaMapMarkerAlt,

@@ -14,7 +14,7 @@ const BlogProvider = ({ children }) => {
     const getAllBlogs = async () => {
         try {
             setLoading(true)
-            const res = await fetch(`/api/blogs/get-blogs`)
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/blogs/get-blogs`)
             const data = await res.json()
             if (data.success) {
                 setBlogs(data.data)
@@ -31,7 +31,7 @@ const BlogProvider = ({ children }) => {
     const fetchBlogById = async (id) => {
         try {
             setLoading(true)
-            const res = await fetch(`/api/blogs/get-blog/${id}`)
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/blogs/get-blog/${id}`)
             const data = await res.json()
             if (data.success) {
                 setBlog(data.data)
@@ -49,7 +49,7 @@ const BlogProvider = ({ children }) => {
     // controller for adding a new blog
     const addBlog = async (blogData) => {
         try {
-            const res = await fetch(`/api/blogs/post-blog`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/blogs/post-blog`, {
                 method: "POST",
                 credentials: "include",
                 body: blogData
@@ -70,7 +70,7 @@ const BlogProvider = ({ children }) => {
 // controller for getting blogs by single user
     const getBlogByUser = async () =>{
         try {
-            const res = await fetch(`/api/blogs/my-blogs`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/blogs/my-blogs`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -89,7 +89,7 @@ const BlogProvider = ({ children }) => {
 
     const deleteBlogByUser = async (id) => {
         try {
-            const res = await fetch(`/api/blogs/delete-blog/${id}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/blogs/delete-blog/${id}`, {
                 method: "DELETE",
                 credentials: "include",
             })
