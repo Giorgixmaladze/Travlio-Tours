@@ -10,7 +10,6 @@ const navLinks = [
     { to: "/about", label: "About" },
     { to: "/contact", label: "Contact" },
     { to: "/blog", label: "Blog" },
-    { to: "/profile", label: "Profile" },
 ]
 
 const Header = () => {

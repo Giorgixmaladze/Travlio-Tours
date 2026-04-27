@@ -14,6 +14,7 @@ const path = require("path")
 const cookieParser = require("cookie-parser")
 const router = require("./router/book.router")
 const BlogRouter = require("./router/blog.router")
+const MessageRouter = require("./router/message.router")
 
 const allowedOrigins = [
     "https://travlio-tours.onrender.com",
@@ -41,6 +42,7 @@ app.use("/api/staff", staffRouter)
 app.use("/api/auth", authRouter)
 app.use("/api/book", router)
 app.use("/api/blogs", BlogRouter)
+app.use("/api/messages", MessageRouter)
 
 dns.setServers(["8.8.8.8", "8.8.4.4"])
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
