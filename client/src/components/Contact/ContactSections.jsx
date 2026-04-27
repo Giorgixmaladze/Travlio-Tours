@@ -1,7 +1,6 @@
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock } from "react-icons/fa"
 import { useContext } from "react"
 import { MessageContext } from "../../context/MessageContext"
-const { sendMessage } = useContext(MessageContext)
 const contactInfo = [
     {
         icon: FaMapMarkerAlt,
@@ -45,6 +44,7 @@ const ContactInfo = () => (
 )
 
 const ContactForm = () => {
+    const { sendMessage } = useContext(MessageContext)
     const formData = {
         name: "",
         email: "",
