@@ -135,6 +135,12 @@ const AuthProvider = ({ children }) => {
             };
         }
     }
+    //controller for google auth
+    const googleAuth = () => {
+        // Redirect directly to the backend route to initiate the OAuth flow.
+        // This avoids CORS issues because it's a standard browser navigation, not an AJAX request.
+        window.location.href = "/api/auth/google";
+    }
 
     if (loading) {
         return (
@@ -145,7 +151,7 @@ const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ signup, login, user, logout, updateProfile }}>
+        <AuthContext.Provider value={{ signup, login, user, logout, updateProfile,googleAuth }}>
             {children}
         </AuthContext.Provider>
     )

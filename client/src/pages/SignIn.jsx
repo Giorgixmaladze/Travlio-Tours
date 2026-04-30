@@ -11,7 +11,7 @@ import { AuthContext } from "../context/AuthContext";
 
 const SignIn = () => {
     const navigate = useNavigate()
-    const { login } = useContext(AuthContext)
+    const { login, googleAuth } = useContext(AuthContext)
     const [formData, setFormData] = useState({
         email: "",
         password: ""
@@ -186,7 +186,7 @@ const SignIn = () => {
                         </div>
 
                         <div className="mt-6 grid grid-cols-2 gap-4 sign-in-form-item">
-                            <button className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors text-gray-700 font-medium text-sm">
+                            <button onClick={googleAuth} className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors text-gray-700 font-medium text-sm">
                                 <FaGoogle className="text-red-500" /> Google
                             </button>
                             <button className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors text-gray-700 font-medium text-sm">

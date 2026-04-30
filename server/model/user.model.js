@@ -18,7 +18,9 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, "Email is required"],
-        unique: true
+        unique: true,
+        sparse:true 
+        // sparse ნიშნავს, რომ შეიძლება null იყოს (მაგ. თუ FB-მ მეილი არ მოგვცა)
     },
     password: {
         type: String,
