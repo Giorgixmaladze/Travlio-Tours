@@ -9,7 +9,7 @@ router.post("/logout", logOut)
 router.get("/me", getMe)
 router.get("/auto-login", autoLogin)
 router.patch("/update-profile", protect, updateProfile)
-router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }))
+router.get("/google", passport.authenticate("google", { scope: ["profile", "email"], session: false }))
 
 router.get("/google/callback", passport.authenticate("google", { failureRedirect: "http://localhost:5173/login", session: false }), (req, res) => {
     // Generate JWT token

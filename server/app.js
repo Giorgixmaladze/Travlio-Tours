@@ -45,7 +45,7 @@ app.use("/api/book", router)
 app.use("/api/blogs", BlogRouter)
 app.use("/api/messages", MessageRouter)
 app.use(passport.initialize())
-app.use(passport.session())
+
 
 
 dns.setServers(["8.8.8.8", "8.8.4.4"])
