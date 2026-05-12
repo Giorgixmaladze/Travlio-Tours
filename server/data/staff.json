@@ -1,0 +1,51 @@
+[
+    {
+        "id": 1,
+        "name": "Sarah Jenkins",
+        "role": "Founder & Lead Explorer",
+        "specialty": "Off-the-beaten-path hiking",
+        "bio": "With 15 years of trekking through the Andes and Alps, Sarah founded the company to share the secret spots the guidebooks missed.",
+        "image_url": "/images/staff/sarah-jenkins.jpg",
+        "social": {
+            "instagram": "@sarah_wanders",
+            "linkedin": "sarah-jenkins-tours"
+        },
+        "fun_fact": "Can pitch a tent in under 45 seconds—even in a gale."
+    },
+    {
+        "id": 2,
+        "name": "Marcus Thorne",
+        "role": "Cultural Historian",
+        "specialty": "Ancient Architecture & Local Lore",
+        "bio": "Marcus doesn't just show you ruins; he brings the people who built them back to life through storytelling.",
+        "image_url": "/images/staff/marcus-thorne.jpg",
+        "social": {
+            "twitter": "@history_marcus"
+        },
+        "fun_fact": "Speaks four languages fluently, and 'Ancient Greek' passably."
+    },
+    {
+        "id": 3,
+        "name": "Elena Rodriguez",
+        "role": "Operations & Logistics Guru",
+        "specialty": "Smooth Travels & Local Logistics",
+        "bio": "The glue that holds your itinerary together. Elena ensures the only surprises you encounter are the pleasant ones.",
+        "image_url": "/images/staff/elena-rodriguez.jpg",
+        "social": {
+            "linkedin": "elena-rodriguez-ops"
+        },
+        "fun_fact": "Has a secret map of the best espresso bars in every major European city."
+    },
+    {
+        "id": 4,
+        "name": "Leo 'The Chef' Kim",
+        "role": "Culinary Guide",
+        "specialty": "Street Food & Wine Pairing",
+        "bio": "Leo believes you can't understand a culture until you've tasted its spiciest dish. Prepare your palate.",
+        "image_url": "/images/staff/leo-kim.jpg",
+        "social": {
+            "instagram": "@leos_local_eats"
+        },
+        "fun_fact": "Once won a competitive dumpling-making contest in Shanghai."
+    }
+]

@@ -1,0 +1,254 @@
+[
+  {
+    "title": "Romantic Paris Getaway",
+    "city": "Paris",
+    "country": "France",
+    "address": "Champs-Élysées, 75008 Paris",
+    "rating": 4.8,
+    "reviewsCount": 1250,
+    "discountPercent": 10,
+    "price": {
+      "original": 1500,
+      "current": 1350
+    },
+    "duration": "5 days",
+    "category": "City Tour",
+    "image": {
+      "alt": "Eiffel Tower in Paris at sunset",
+      "url": "https://picsum.photos/id/1047/1000/600"
+    },
+    "badges": ["Bestseller", "Romantic"],
+    "features": ["Flights included", "Hotel booking", "Guided tours"]
+  },
+  {
+    "title": "Kyoto Heritage Explorer",
+    "city": "Kyoto",
+    "country": "Japan",
+    "address": "Higashiyama Ward, Kyoto",
+    "rating": 4.9,
+    "reviewsCount": 840,
+    "discountPercent": 0,
+    "price": {
+      "original": 1200,
+      "current": 1200
+    },
+    "duration": "7 days",
+    "category": "Cultural",
+    "image": {
+      "alt": "Fushimi Inari-taisha Shrine",
+      "url": "https://picsum.photos/id/1044/1000/600"
+    },
+    "badges": ["New", "Cultural"],
+    "features": ["Tea tasting", "Temple tours", "Local English guide"]
+  },
+  {
+    "title": "Swiss Alps Adventure",
+    "city": "Zermatt",
+    "country": "Switzerland",
+    "address": "Matterhorn Glacier Paradise",
+    "rating": 4.7,
+    "reviewsCount": 520,
+    "discountPercent": 15,
+    "price": {
+      "original": 2500,
+      "current": 2125
+    },
+    "duration": "10 days",
+    "category": "Adventure",
+    "image": {
+      "alt": "Snowy peaks of the Matterhorn",
+      "url": "https://picsum.photos/id/1036/1000/600"
+    },
+    "badges": ["Adventure", "15% OFF"],
+    "features": ["Ski pass included", "Cabin stay", "Equipment rental"]
+  },
+  {
+    "title": "Historical Rome Sightseeing",
+    "city": "Rome",
+    "country": "Italy",
+    "address": "Piazza del Colosseo, 1, 00184 Roma",
+    "rating": 4.6,
+    "reviewsCount": 2100,
+    "discountPercent": 5,
+    "price": {
+      "original": 900,
+      "current": 855
+    },
+    "duration": "4 days",
+    "category": "Historical",
+    "image": {
+      "alt": "The Colosseum in Rome during daytime",
+      "url": "https://picsum.photos/id/1040/1000/600"
+    },
+    "badges": ["Popular", "Historical"],
+    "features": ["Skip-the-line tickets", "History expert guide", "Breakfast included"]
+  },
+  {
+    "title": "New York City Highlights",
+    "city": "New York",
+    "country": "USA",
+    "address": "Times Square, Manhattan, NY 10036",
+    "rating": 4.8,
+    "reviewsCount": 3450,
+    "discountPercent": 20,
+    "price": {
+      "original": 1800,
+      "current": 1440
+    },
+    "duration": "6 days",
+    "category": "City Tour",
+    "image": {
+      "alt": "Times Square illuminated at night",
+      "url": "https://picsum.photos/id/1048/1000/600"
+    },
+    "badges": ["Discounted", "City Life"],
+    "features": ["Broadway show tickets", "Statue of Liberty ferry", "Subway pass"]
+  },
+  {
+    "title": "Bali Tropical Escape",
+    "city": "Ubud",
+    "country": "Indonesia",
+    "address": "Jalan Raya Ubud, Gianyar 80571",
+    "rating": 4.9,
+    "reviewsCount": 4200,
+    "discountPercent": 0,
+    "price": {
+      "original": 850,
+      "current": 850
+    },
+    "duration": "8 days",
+    "category": "Relaxation",
+    "image": {
+      "alt": "Beautiful lush green rice terraces in Bali",
+      "url": "https://picsum.photos/id/1053/1000/600"
+    },
+    "badges": ["Trending", "Top Rated"],
+    "features": ["Spa treatments", "Yoga classes", "Beachfront villa"]
+  },
+  {
+    "title": "Mysteries of Ancient Egypt",
+    "city": "Cairo",
+    "country": "Egypt",
+    "address": "Giza Plateau",
+    "rating": 4.7,
+    "reviewsCount": 310,
+    "discountPercent": 0,
+    "price": {
+      "original": 1100,
+      "current": 1100
+    },
+    "duration": "6 days",
+    "category": "Historical",
+    "image": {
+      "alt": "Pyramids of Giza at sunset",
+      "url": "https://picsum.photos/id/1050/1000/600"
+    },
+    "badges": ["Historical", "Must See"],
+    "features": ["Nile cruise", "Museum tickets", "Private Egyptologist"]
+  },
+  {
+    "title": "Vibrant Rio Experience",
+    "city": "Rio de Janeiro",
+    "country": "Brazil",
+    "address": "Copacabana Beach",
+    "rating": 4.8,
+    "reviewsCount": 950,
+    "discountPercent": 25,
+    "price": {
+      "original": 1400,
+      "current": 1050
+    },
+    "duration": "5 days",
+    "category": "City Tour",
+    "image": {
+      "alt": "Christ the Redeemer statue overlooking Rio",
+      "url": "https://picsum.photos/id/1018/1000/600"
+    },
+    "badges": ["25% OFF", "Beach Life"],
+    "features": ["Carnival show", "Sugarloaf Mountain cable car", "Caipirinha tasting"]
+  },
+  {
+    "title": "Santorini Sunset Retreat",
+    "city": "Oia",
+    "country": "Greece",
+    "address": "Oia Caldera",
+    "rating": 4.9,
+    "reviewsCount": 1800,
+    "discountPercent": 10,
+    "price": {
+      "original": 2100,
+      "current": 1890
+    },
+    "duration": "7 days",
+    "category": "Relaxation",
+    "image": {
+      "alt": "White buildings with blue domes in Santorini",
+      "url": "https://picsum.photos/id/1055/1000/600"
+    },
+    "badges": ["Romantic", "Bestseller"],
+    "features": ["Catamaran cruise", "Wine tasting", "Private terrace"]
+  },
+  {
+    "title": "Canadian Rockies Expedition",
+    "city": "Banff",
+    "country": "Canada",
+    "address": "Banff National Park, AB",
+    "rating": 4.9,
+    "reviewsCount": 670,
+    "discountPercent": 0,
+    "price": {
+      "original": 1600,
+      "current": 1600
+    },
+    "duration": "8 days",
+    "category": "Adventure",
+    "image": {
+      "alt": "Turquoise waters of Lake Louise with mountains",
+      "url": "https://picsum.photos/id/1039/1000/600"
+    },
+    "badges": ["Nature", "Eco-friendly"],
+    "features": ["Canoe rental", "Hiking guide", "Wildlife tour"]
+  },
+  {
+    "title": "Sydney Harbor Coastline",
+    "city": "Sydney",
+    "country": "Australia",
+    "address": "Sydney Opera House",
+    "rating": 4.7,
+    "reviewsCount": 2200,
+    "discountPercent": 15,
+    "price": {
+      "original": 1900,
+      "current": 1615
+    },
+    "duration": "6 days",
+    "category": "City Tour",
+    "image": {
+      "alt": "Sydney Opera House and Harbor Bridge",
+      "url": "https://picsum.photos/id/1067/1000/600"
+    },
+    "badges": ["Popular", "15% OFF"],
+    "features": ["Surf lesson at Bondi", "Harbor cruise", "Zoo entry"]
+  },
+  {
+    "title": "Marrakech Medina Magic",
+    "city": "Marrakech",
+    "country": "Morocco",
+    "address": "Jemaa el-Fnaa square",
+    "rating": 4.6,
+    "reviewsCount": 1120,
+    "discountPercent": 5,
+    "price": {
+      "original": 800,
+      "current": 760
+    },
+    "duration": "4 days",
+    "category": "Cultural",
+    "image": {
+      "alt": "Colorful spices and lamps in Moroccan market",
+      "url": "https://picsum.photos/id/1043/1000/600"
+    },
+    "badges": ["Cultural", "Short Trip"],
+    "features": ["Sahara desert trip", "Camel ride", "Traditional hammam"]
+  }
+]
