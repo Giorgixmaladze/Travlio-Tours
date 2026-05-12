@@ -2,7 +2,7 @@
  
 A full-stack travel agency web application where users can explore destinations, book tours, write blogs, and manage their profiles — built with React, Node.js, and MongoDB.
  
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-travlio--tours.onrender.com-4CAF50?style=for-the-badge)](https://travlio-tours.onrender.com)
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-travlio--tours.onrender.com-4CAF50?style=for-the-badge)](https://travlio-tours-1.onrender.com)
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)](https://react.dev)
 [![Node.js](https://img.shields.io/badge/Node.js-Express-339933?flat-square&logo=node.js)](https://nodejs.org)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-47A248?flat-square&logo=mongodb)](https://mongodb.com)
